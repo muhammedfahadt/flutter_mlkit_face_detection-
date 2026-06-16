@@ -1,0 +1,25 @@
+{
+  "trafficpatrolApp": {
+    "contentBlob": {
+      "home": {
+        "title": "Content Blobs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Content Blob",
+        "createOrEditLabel": "Create or edit a Content Blob",
+        "notFound": "No Content Blobs found"
+      },
+      "created": "A new Content Blob is created with identifier {{ param }}",
+      "updated": "A Content Blob is updated with identifier {{ param }}",
+      "deleted": "A Content Blob is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Content Blob {{ id }}?"
+      },
+      "detail": {
+        "title": "Content Blob"
+      },
+      "id": "ID",
+      "contentBlob": "Content Blob",
+      "content": "Content"
+    }
+  }
+}

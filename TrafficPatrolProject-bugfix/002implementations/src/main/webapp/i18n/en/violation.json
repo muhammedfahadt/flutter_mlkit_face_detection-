@@ -1,0 +1,27 @@
+{
+  "trafficpatrolApp": {
+    "violation": {
+      "home": {
+        "title": "Violations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Violation",
+        "createOrEditLabel": "Create or edit a Violation",
+        "notFound": "No Violations found"
+      },
+      "created": "A new Violation is created with identifier {{ param }}",
+      "updated": "A Violation is updated with identifier {{ param }}",
+      "deleted": "A Violation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Violation {{ id }}?"
+      },
+      "detail": {
+        "title": "Violation"
+      },
+      "id": "ID",
+      "violationType": "Violation Type",
+      "points": "Points",
+      "appUser": "App User",
+      "content": "Content"
+    }
+  }
+}

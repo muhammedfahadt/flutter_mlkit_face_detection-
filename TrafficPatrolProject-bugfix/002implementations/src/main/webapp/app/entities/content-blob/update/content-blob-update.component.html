@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-content-blob-heading"
+        data-cy="ContentBlobCreateUpdateHeading"
+        jhiTranslate="trafficpatrolApp.contentBlob.home.createOrEditLabel"
+      >
+        Create or edit a Content Blob
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="trafficpatrolApp.contentBlob.contentBlob" for="field_contentBlob">Content Blob</label>
+          <div>
+            @if (editForm.get('contentBlob')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('contentBlob')!.value!, editForm.get('contentBlobContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start"
+                  >{{ editForm.get('contentBlobContentType')!.value }}, {{ byteSize(editForm.get('contentBlob')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ contentBlob: undefined, contentBlobContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_contentBlob"
+              data-cy="contentBlob"
+              (change)="setFileData($event, 'contentBlob', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="contentBlob"
+            id="field_contentBlob"
+            data-cy="contentBlob"
+            formControlName="contentBlob"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="contentBlobContentType"
+            id="field_contentBlobContentType"
+            formControlName="contentBlobContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="trafficpatrolApp.contentBlob.content" for="field_content">Content</label>
+          <select
+            class="form-control"
+            id="field_content"
+            data-cy="content"
+            name="content"
+            formControlName="content"
+            [compareWith]="compareContent"
+          >
+            <option [ngValue]="null"></option>
+            @for (contentOption of contentsSharedCollection; track $index) {
+              <option [ngValue]="contentOption">{{ contentOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

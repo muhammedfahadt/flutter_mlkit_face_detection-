@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "changelogDate": "20240301060043"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "content",
+  "fields": [
+    {
+      "fieldName": "contentType",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "uploadDateTime",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Content",
+  "relationships": [
+    {
+      "otherEntityName": "contentBlob",
+      "otherEntityRelationshipName": "content",
+      "relationshipName": "contentBlob",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "violation",
+      "otherEntityRelationshipName": "content",
+      "relationshipName": "violations",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "appUser",
+      "otherEntityRelationshipName": "contents",
+      "relationshipName": "appUser",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

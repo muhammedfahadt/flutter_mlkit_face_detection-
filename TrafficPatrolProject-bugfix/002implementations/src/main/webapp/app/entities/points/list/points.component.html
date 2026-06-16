@@ -1,0 +1,107 @@
+<div>
+  <h2 id="page-heading" data-cy="PointsHeading">
+    <span jhiTranslate="trafficpatrolApp.points.home.title">Points</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="trafficpatrolApp.points.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-points"
+        [routerLink]="['/points/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="trafficpatrolApp.points.home.createLabel">Create a new Points</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (points?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="trafficpatrolApp.points.home.notFound">No Points found</span>
+    </div>
+  }
+
+  @if (points && points.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pointsEarned">
+              <div class="d-flex">
+                <span jhiTranslate="trafficpatrolApp.points.pointsEarned">Points Earned</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="uploadDateTime">
+              <div class="d-flex">
+                <span jhiTranslate="trafficpatrolApp.points.uploadDateTime">Upload Date Time</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="appUser.id">
+              <div class="d-flex">
+                <span jhiTranslate="trafficpatrolApp.points.appUser">App User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (points of points; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/points', points.id, 'view']">{{ points.id }}</a>
+              </td>
+              <td>{{ points.pointsEarned }}</td>
+              <td>{{ points.uploadDateTime | formatMediumDatetime }}</td>
+              <td>
+                @if (points.appUser) {
+                  <div>
+                    <a [routerLink]="['/app-user', points.appUser.id, 'view']">{{ points.appUser.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/points', points.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/points', points.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(points)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,27 @@
+{
+  "annotations": {
+    "changelogDate": "20240301060143"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "content_blob",
+  "fields": [
+    {
+      "fieldName": "contentBlob",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    }
+  ],
+  "name": "ContentBlob",
+  "relationships": [
+    {
+      "otherEntityName": "content",
+      "otherEntityRelationshipName": "contentBlob",
+      "relationshipName": "content",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

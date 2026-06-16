@@ -1,0 +1,27 @@
+@startuml
+
+actor User
+participant "Open API Client" as APIClient
+participant "Controller" as Controller
+participant "Service Layer" as Service
+participant "AI Algorithm API Server" as AIServer
+participant "Motor Vehicle Department" as Department
+participant "JPA Repository" as Repository
+database Database
+
+User -> APIClient: Upload violation content
+APIClient -> Controller: Send multipart data
+Controller -> Service: Receive content
+Service -> AIServer: Check content for violations
+AIServer --> Service: Violation detected
+Service -> Department: Send content for review
+Department --> Service: Review completed
+Service -> Repository: Save content to database
+Repository -> Database: Insert data into entity table
+Database --> Repository: Confirmation
+Repository --> Service: Confirmation
+Service --> Controller: Confirmation
+Controller --> APIClient: Response
+APIClient --> User: Response
+
+@enduml

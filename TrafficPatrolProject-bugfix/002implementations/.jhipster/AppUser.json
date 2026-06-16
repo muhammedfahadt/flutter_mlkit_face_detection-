@@ -1,0 +1,57 @@
+{
+  "annotations": {
+    "changelogDate": "20240301055943"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "app_user",
+  "fields": [
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^[0-9]{10}$"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pinCode",
+      "fieldType": "Long"
+    }
+  ],
+  "name": "AppUser",
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "content",
+      "otherEntityRelationshipName": "appUser",
+      "relationshipName": "contents",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "points",
+      "otherEntityRelationshipName": "appUser",
+      "relationshipName": "points",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "violation",
+      "otherEntityRelationshipName": "appUser",
+      "relationshipName": "violations",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
