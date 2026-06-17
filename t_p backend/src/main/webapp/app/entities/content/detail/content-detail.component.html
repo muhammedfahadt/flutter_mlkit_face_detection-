@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (content) {
+      <div>
+        <h2 data-cy="contentDetailsHeading"><span jhiTranslate="trafficpatrolApp.content.detail.title">Content</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ content.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="trafficpatrolApp.content.contentType">Content Type</span></dt>
+          <dd>
+            <span>{{ content.contentType }}</span>
+          </dd>
+          <dt><span jhiTranslate="trafficpatrolApp.content.uploadDateTime">Upload Date Time</span></dt>
+          <dd>
+            <span>{{ content.uploadDateTime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="trafficpatrolApp.content.status">Status</span></dt>
+          <dd>
+            <span>{{ content.status }}</span>
+          </dd>
+          <dt><span jhiTranslate="trafficpatrolApp.content.appUser">App User</span></dt>
+          <dd>
+            @if (content.appUser) {
+              <div>
+                <a [routerLink]="['/app-user', content.appUser.id, 'view']">{{ content.appUser.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/content', content.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

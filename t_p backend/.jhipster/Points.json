@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20240301060343"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "points",
+  "fields": [
+    {
+      "fieldName": "pointsEarned",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "uploadDateTime",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "Points",
+  "relationships": [
+    {
+      "otherEntityName": "violation",
+      "otherEntityRelationshipName": "points",
+      "relationshipName": "violation",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "appUser",
+      "otherEntityRelationshipName": "points",
+      "relationshipName": "appUser",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

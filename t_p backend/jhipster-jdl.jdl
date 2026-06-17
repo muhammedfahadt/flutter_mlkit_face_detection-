@@ -1,0 +1,44 @@
+entity AppUser {
+  phoneNumber   String pattern(/^[0-9]{10}$/)
+  address       String
+  pinCode       Long
+}
+
+entity Content {
+  contentType     String
+  uploadDateTime  ZonedDateTime
+  status          String
+}
+
+entity ContentBlob {
+  contentBlob     Blob
+}
+
+entity Violation {
+  violationType   String
+}
+
+entity Points {
+  pointsEarned    Long
+  uploadDateTime  ZonedDateTime
+}
+
+relationship OneToMany {
+  AppUser    {contents}     to Content{appUser},
+  AppUser    {points}       to Points{appUser},
+  Content    {contentBlob}  to ContentBlob{content},
+  Content    {violations}   to Violation{content}
+}
+
+relationship OneToOne {
+  Violation  {points}       to Points{violation},
+  AppUser    {user}       to User with builtInEntity
+}
+
+relationship ManyToOne {
+  Violation  {appUser}      to AppUser{violations}
+}
+
+dto * with mapstruct
+service all with serviceClass
+service all with serviceImpl
