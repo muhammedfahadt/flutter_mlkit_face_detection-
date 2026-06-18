@@ -4,6 +4,8 @@ import 'package:traffic_patrol/src/pages/widgets/config.dart';
 import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
 import 'package:openapi/openapi.dart';
 
+import 'app_home_page.dart';
+
 class ManagedUser {
   final String id;
   final String login;
@@ -95,8 +97,8 @@ class _SignUpPageState extends State<SignUpPage> {
           // 1. Fetch current user info first
           final currentUser = await _openapi.getAccountResourceApi().getAccount(
             headers: {'Authorization': 'Bearer $jwt'},
-          );                                                                        
-                                                                                                                                                                                                     
+          );
+
           // 2. Now build the UserDTO using the data from the server
           UserDTOBuilder userDTOBuilder = UserDTOBuilder()
             ..id = currentUser.data?.id
@@ -140,10 +142,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 content: Text('User registered'),
                 actions: [
                   TextButton(
-                    onPressed: () => Navigator.pushReplacement(
+onPressed: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => CameraApp()),
+                      MaterialPageRoute(builder: (context) => const AppHomePage()),
                     ),
+
                     child: Text('OK'),
                   ),
                 ],
@@ -238,14 +241,15 @@ class _SignUpPageState extends State<SignUpPage> {
                   obscureText:
                       true, // Set obscureText to true for password fields
                 ),
-              TextField(
-  controller: _phoneNumberController,
-  keyboardType: TextInputType.number,
-  inputFormatters: <TextInputFormatter>[
-    FilteringTextInputFormatter.digitsOnly // Ensures only digits can be typed
-  ],
-  decoration: InputDecoration(labelText: 'Phone Number'),
-),
+                TextField(
+                  controller: _phoneNumberController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter
+                        .digitsOnly, // Ensures only digits can be typed
+                  ],
+                  decoration: InputDecoration(labelText: 'Phone Number'),
+                ),
                 TextField(
                   controller: _addressController,
                   decoration: InputDecoration(labelText: 'Address'),
