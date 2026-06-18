@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
-import 'package:traffic_patrol/src/sample_feature/sample_item_list_view.dart';
 import 'package:openapi/openapi.dart';
 
+import 'app_home_page.dart';
 import 'managed_user_widget.dart';
 
 class LoginForm extends StatefulWidget {
@@ -55,12 +54,14 @@ class _LoginFormState extends State<LoginForm> {
         ..username = username
         ..password = password;
 
-      final result = await _openapi
-          .getAuthenticateControllerApi()
-          .authorize(loginVM: loginBuilder.build());
+      final result = await _openapi.getAuthenticateControllerApi().authorize(
+        loginVM: loginBuilder.build(),
+      );
 
       debugPrint('Authenticated status: ${result.statusCode}');
-      debugPrint('Successful login: ${result.statusCode == 200 && result.data?.idToken != null}');
+      debugPrint(
+        'Successful login: ${result.statusCode == 200 && result.data?.idToken != null}',
+      );
       debugPrint('Token: ${result.data?.idToken}');
 
       // 401 for invalid credentials, anything else success depends on API contract.
@@ -73,9 +74,8 @@ class _LoginFormState extends State<LoginForm> {
         Text('Login successful! Token: ${result.data!.idToken}');
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const CameraApp()),
-        );  
-
+          MaterialPageRoute(builder: (context) => const AppHomePage()),
+        );
       } else {
         _showError('Invalid username or password.');
       }

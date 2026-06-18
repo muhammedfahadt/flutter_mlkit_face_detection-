@@ -15,10 +15,10 @@ class SettingsController with ChangeNotifier {
 
   // Make ThemeMode a private variable so it is not updated directly without
   // also persisting the changes with the SettingsService.
-  late ThemeMode _themeMode;
+  ThemeMode? _themeMode;
 
   // Allow Widgets to read the user's preferred ThemeMode.
-  ThemeMode get themeMode => _themeMode;
+  ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
