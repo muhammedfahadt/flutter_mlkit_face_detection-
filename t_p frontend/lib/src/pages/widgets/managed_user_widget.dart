@@ -95,8 +95,8 @@ class _SignUpPageState extends State<SignUpPage> {
           // 1. Fetch current user info first
           final currentUser = await _openapi.getAccountResourceApi().getAccount(
             headers: {'Authorization': 'Bearer $jwt'},
-          );
-
+          );                                                                        
+                                                                                                                                                                                                     
           // 2. Now build the UserDTO using the data from the server
           UserDTOBuilder userDTOBuilder = UserDTOBuilder()
             ..id = currentUser.data?.id
