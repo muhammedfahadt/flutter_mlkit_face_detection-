@@ -44,6 +44,8 @@ dependencies:
   image: ^4.8.0
   flutter_secure_storage: ^10.3.1
   flutter_gen: ^5.14.1
+  google_mlkit_image_labeling: ^0.14.2
+  google_mlkit_object_detection: ^0.15.1
 
 dev_dependencies:
   flutter_test:
