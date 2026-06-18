@@ -2,19 +2,46 @@ import 'package:flutter/material.dart';
 
 import 'login_form.dart';
 import 'upload_widget.dart';
+import 'package:traffic_patrol/src/pages/widgets/home_appbar_actions.dart';
+import 'package:traffic_patrol/src/app.dart';
 
 // upload_widget.dart defines CameraApp; reuse it for the Camera action.
 
 /// Post-login landing page.
 ///
 /// Routes to feature pages instead of navigating directly from login/signup.
-class AppHomePage extends StatelessWidget {
+class AppHomePage extends StatefulWidget {
   const AppHomePage({super.key});
+
+  @override
+  State<AppHomePage> createState() => _AppHomePageState();
+}
+
+class _AppHomePageState extends State<AppHomePage> {
+  ThemeMode _themeMode = ThemeMode.system;
+  Locale _locale = const Locale('en', '');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Traffic Patrol')),
+      appBar: AppBar(
+        title: const Text('Traffic Patrol'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: HomeAppBarActions(
+              onThemeChanged: (mode) {
+                setState(() => _themeMode = mode);
+                // UI-only switch; app theme is managed by Settings screen.
+              },
+              onLocaleChanged: (locale) {
+                setState(() => _locale = locale);
+                // UI-only language switch (project currently supports English).
+              },
+            ),
+          ),
+        ],
+      ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -31,11 +58,9 @@ class AppHomePage extends StatelessWidget {
                 runSpacing: 12,
                 alignment: WrapAlignment.center,
                 children: [
-                  
-                
                   _HomeActionCard(
-                    icon: Icons.upload_file_outlined,
-                    title: 'Upload',
+                    icon: Icons.camera_alt_outlined,
+                    title: 'Camera',
                     onTap: () {
                       Navigator.push(
                         context,
@@ -43,6 +68,18 @@ class AppHomePage extends StatelessWidget {
                       );
                     },
                   ),
+                  _HomeActionCard(
+                    icon: Icons.upload_file_outlined,
+                    title: 'Upload',
+                    onTap: () {
+                      // upload_widget.dart currently hosts the camera/upload flow.
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const CameraApp()),
+                      );
+                    },
+                  ),
+
                   _HomeActionCard(
                     icon: Icons.login_outlined,
                     title: 'Login',
