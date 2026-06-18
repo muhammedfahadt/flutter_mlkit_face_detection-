@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240301060243"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "entityTableName": "violation",
+  "fields": [
+    {
+      "fieldName": "violationType",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Violation",
+  "relationships": [
+    {
+      "otherEntityName": "points",
+      "otherEntityRelationshipName": "violation",
+      "relationshipName": "points",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "appUser",
+      "otherEntityRelationshipName": "violations",
+      "relationshipName": "appUser",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "content",
+      "otherEntityRelationshipName": "violations",
+      "relationshipName": "content",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Violation.
+    -->
+    <changeSet id="20240301060243-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="points_id"
+                                 baseTableName="violation"
+                                 constraintName="fk_violation__points_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="points"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="app_user_id"
+                                 baseTableName="violation"
+                                 constraintName="fk_violation__app_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="content_id"
+                                 baseTableName="violation"
+                                 constraintName="fk_violation__content_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="content"
+                                 />
+    </changeSet>
+</databaseChangeLog>

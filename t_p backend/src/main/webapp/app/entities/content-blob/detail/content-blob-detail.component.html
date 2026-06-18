@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (contentBlob) {
+      <div>
+        <h2 data-cy="contentBlobDetailsHeading"><span jhiTranslate="trafficpatrolApp.contentBlob.detail.title">Content Blob</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ contentBlob.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="trafficpatrolApp.contentBlob.contentBlob">Content Blob</span></dt>
+          <dd>
+            @if (contentBlob.contentBlob) {
+              <div>
+                <a (click)="openFile(contentBlob.contentBlob, contentBlob.contentBlobContentType)" jhiTranslate="entity.action.open"
+                  >Open</a
+                >
+                {{ contentBlob.contentBlobContentType }}, {{ byteSize(contentBlob.contentBlob) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="trafficpatrolApp.contentBlob.content">Content</span></dt>
+          <dd>
+            @if (contentBlob.content) {
+              <div>
+                <a [routerLink]="['/content', contentBlob.content.id, 'view']">{{ contentBlob.content.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/content-blob', contentBlob.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
