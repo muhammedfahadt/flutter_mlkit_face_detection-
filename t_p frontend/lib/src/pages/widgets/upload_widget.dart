@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 import 'package:traffic_patrol/src/pages/widgets/camera_service.dart';
 
 
@@ -41,12 +42,55 @@ class _CameraAppState extends State<CameraApp> {
   @override
   void dispose() {
     _controller?.dispose();
+    _descController.dispose();
     super.dispose();
   }
   // Helper to handle the dialog and upload flow
   void _handleCapture() async {
     final photo = await _controller?.takePicture();
     if (photo == null) return;
+    
+    if (!mounted) return;
+    
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(child: CircularProgressIndicator()),
+    );
+
+    String aiDescription = "";
+    try {
+      final inputImage = InputImage.fromFilePath(photo.path);
+      final imageLabeler = ImageLabeler(options: ImageLabelerOptions(confidenceThreshold: 0.6));
+      final labels = await imageLabeler.processImage(inputImage);
+      
+      final trafficKeywords = ['Car', 'Vehicle', 'Motorcycle', 'Truck', 'Bus', 'Bicycle', 'Traffic', 'License plate', 'Wheel', 'Tire'];
+      
+      List<String> detected = [];
+      bool possibleViolation = false;
+      
+      for (ImageLabel label in labels) {
+        detected.add("${label.label} (${(label.confidence * 100).toStringAsFixed(1)}%)");
+        if (trafficKeywords.any((kw) => label.label.toLowerCase().contains(kw.toLowerCase()))) {
+          possibleViolation = true;
+        }
+      }
+      
+      if (detected.isNotEmpty) {
+        aiDescription = "AI Detection: ${detected.join(', ')}.";
+        if (possibleViolation) {
+          aiDescription = "Traffic violation candidate. $aiDescription";
+        }
+      }
+      imageLabeler.close();
+    } catch (e) {
+      debugPrint("ML Kit error: $e");
+    }
+
+    if (!mounted) return;
+    Navigator.pop(context); // Dismiss loading dialog
+
+    _descController.text = aiDescription;
     
     final bytes = await photo.readAsBytes();
 
@@ -56,7 +100,11 @@ class _CameraAppState extends State<CameraApp> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Enter Description'),
-        content: TextField(controller: _descController),
+        content: TextField(
+          controller: _descController,
+          maxLines: 3,
+          decoration: const InputDecoration(hintText: 'Describe the violation...'),
+        ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, _descController.text), child: const Text('OK'))
         ],
@@ -67,9 +115,13 @@ class _CameraAppState extends State<CameraApp> {
     if (description != null) {
       try {
         await _service.uploadPhoto(imageBytes: bytes, description: description);
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Success!')));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Success!')));
+        }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+        }
       }
     }
   }
