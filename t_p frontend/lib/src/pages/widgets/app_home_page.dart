@@ -4,6 +4,9 @@ import 'package:traffic_patrol/src/localization/app_localizations.dart';
 import 'package:traffic_patrol/src/pages/widgets/home_appbar_actions.dart';
 import 'package:traffic_patrol/src/pages/widgets/login_form.dart';
 import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
+import 'package:traffic_patrol/src/pages/widgets/content_read_page.dart';
+import 'package:traffic_patrol/src/pages/widgets/violation_read_page.dart';
+import 'package:traffic_patrol/src/pages/widgets/points_read_page.dart';
 
 /// Post-login landing page.
 ///
@@ -75,14 +78,49 @@ class _AppHomePageState extends State<AppHomePage> {
                     },
                   ),
                   _HomeActionCard(
+                    icon: Icons.article_outlined,
+                    title: 'Contents',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ContentReadPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  _HomeActionCard(
+                    icon: Icons.gavel_outlined,
+                    title: 'Violations',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ViolationReadPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  _HomeActionCard(
+                    icon: Icons.stars_outlined,
+                    title: 'Points',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const PointsReadPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  _HomeActionCard(
                     icon: Icons.login_outlined,
                     title: localizations?.login ?? 'Login',
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                               LoginForm(onLocaleChanged: (_) {}),
+                          builder: (_) => LoginForm(onLocaleChanged: (_) {}),
                         ),
                       );
                     },
