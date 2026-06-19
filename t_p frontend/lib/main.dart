@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traffic_patrol/src/localization/app_localizations.dart';
 
 import 'package:traffic_patrol/src/pages/widgets/app_home_page.dart';
 
@@ -12,6 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+  supportedLocales: AppLocalizations.supportedLocales,
       title: 'Traffic Patrol',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -19,4 +22,7 @@ class MyApp extends StatelessWidget {
       home: const AppHomePage(),
     );
   }
-}
+}  
+
+
+
