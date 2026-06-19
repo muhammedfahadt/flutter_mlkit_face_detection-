@@ -9,5 +9,38 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'flutter_application_sample';
+  String get appTitle => 'Traffic Patrol';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get upload => 'Upload';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get light => 'Light';
+
+  @override
+  String get dark => 'Dark';
+
+  @override
+  String get system => 'System';
+
+  @override
+  String get english => 'English';
 }
