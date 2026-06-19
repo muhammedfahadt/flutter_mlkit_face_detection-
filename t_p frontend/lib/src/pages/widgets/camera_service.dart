@@ -2,7 +2,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
-import 'config.dart';
 
 class CameraService {
   final Openapi _openapi = Openapi();

@@ -1,61 +1,58 @@
 {
-  "appTitle": "Traffic Patrol",
-  "@appTitle": {
-    "description": "The title of the application"
-  },
+  "appTitle": "ട്രാഫിക് പട്രോൾ",
+  "@appTitle": { "description": "The title of the application" },
 
-  "home": "Home",
+  "home": "ഹോം",
   "@home": { "description": "Home page title" },
 
-  "camera": "Camera",
+  "camera": "ക്യാമറ",
   "@camera": { "description": "Home action label: Camera" },
 
-  "upload": "Upload",
+  "upload": "അപ്‌ലോഡ്",
   "@upload": { "description": "Home action label: Upload" },
 
-  "login": "Login",
+  "login": "ലോഗിൻ",
   "@login": { "description": "Home action label: Login" },
 
-  "settings": "Settings",
+  "settings": "ക്രമീകരണങ്ങൾ",
   "@settings": { "description": "Settings button label" },
 
-  "theme": "Theme",
+  "theme": "തീം",
   "@theme": { "description": "Theme menu label" },
 
-  "language": "Language",
+  "language": "ഭാഷ",
   "@language": { "description": "Language menu label" },
 
-  "light": "Light",
+  "light": "ലൈറ്റ്",
   "@light": { "description": "Theme option: Light" },
 
-  "dark": "Dark",
+  "dark": "ഡാർക്ക്",
   "@dark": { "description": "Theme option: Dark" },
 
-  "system": "System",
+  "system": "സിസ്റ്റം",
   "@system": { "description": "Theme option: System" },
 
-  "english": "English",
+  "english": "ഇംഗ്ലീഷ്",
   "@english": { "description": "Language option: English" },
 
-  "loginFailed": "Login Failed",
+  "loginFailed": "ലോഗിൻ പരാജയപ്പെട്ടു",
   "@loginFailed": { "description": "Title shown when login fails" },
 
-  "ok": "OK",
+  "ok": "ശരി",
   "@ok": { "description": "Generic OK button label" },
 
-  "usernamePasswordRequired": "Username and password are required.",
+  "usernamePasswordRequired": "ഉപയോക്തൃനാമവും പാസ്‌വേഡും ആവശ്യമാണ്.",
   "@usernamePasswordRequired": { "description": "Validation message for empty username/password" },
 
-  "invalidCredentials": "Invalid username or password.",
+  "invalidCredentials": "തെറ്റായ ഉപയോക്തൃനാമം അല്ലെങ്കിൽ പാസ്‌വേഡ്.",
   "@invalidCredentials": { "description": "Validation message for wrong credentials" },
 
-  "username": "Username",
+  "username": "ഉപയോക്തൃനാമം",
   "@username": { "description": "Login form username field" },
 
-  "password": "Password",
+  "password": "പാസ്‌വേഡ്",
   "@password": { "description": "Login form password field" },
 
-  "dontHaveAccountSignUp": "Don't have an account? Sign Up",
+  "dontHaveAccountSignUp": "അക്കൗണ്ട് ഇല്ലേ? സൈൻ അപ്പ് ചെയ്യുക",
   "@dontHaveAccountSignUp": { "description": "Link to signup page" }
 }
-

@@ -4,12 +4,10 @@ import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 import 'package:traffic_patrol/src/pages/widgets/camera_service.dart';
 
 import 'app_home_page.dart';
-import 'login_form.dart';
-
-import 'app_home_page.dart';
 
 class CameraApp extends StatefulWidget {
-  const CameraApp({super.key});
+  final Function(Locale) onLocaleChanged;
+  const CameraApp({super.key, required this.onLocaleChanged});
 
   @override
   State<CameraApp> createState() => _CameraAppState();
@@ -161,8 +159,9 @@ class _CameraAppState extends State<CameraApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (_controller?.value.isInitialized != true)
+    if (_controller?.value.isInitialized != true) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -177,7 +176,7 @@ class _CameraAppState extends State<CameraApp> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const AppHomePage()),
+                MaterialPageRoute(builder: (_) =>  AppHomePage( onLocaleChanged: (_) {})),
                 (_) => false,
               );
             },

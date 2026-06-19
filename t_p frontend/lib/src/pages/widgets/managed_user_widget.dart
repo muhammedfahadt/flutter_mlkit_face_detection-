@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:traffic_patrol/src/pages/widgets/config.dart';
 import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
+import 'package:traffic_patrol/src/localization/app_localizations.dart';
 import 'package:openapi/openapi.dart';
 
 import 'app_home_page.dart';
@@ -43,6 +44,8 @@ class AppUser {
 }
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -56,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
-  Openapi _openapi = Openapi();
+  final Openapi _openapi = Openapi();
   Future<void> _signUp(BuildContext context) async {
     try {
       ManagedUserVMBuilder managedUserVMBuilder = ManagedUserVMBuilder()
@@ -142,9 +145,12 @@ class _SignUpPageState extends State<SignUpPage> {
                 content: Text('User registered'),
                 actions: [
                   TextButton(
-onPressed: () => Navigator.pushReplacement(
+                    onPressed: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const AppHomePage()),
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AppHomePage(onLocaleChanged: (_) {}),
+                      ),
                     ),
 
                     child: Text('OK'),
@@ -209,62 +215,59 @@ onPressed: () => Navigator.pushReplacement(
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // Add MaterialApp or WidgetsApp here
-      home: Scaffold(
-        appBar: AppBar(title: Text('Sign Up')),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  controller: _loginController,
-                  decoration: InputDecoration(labelText: 'Username'),
-                ),
-                TextField(
-                  controller: _firstNameController,
-                  decoration: InputDecoration(labelText: 'Firstname'),
-                ),
-                TextField(
-                  controller: _lastNameController,
-                  decoration: InputDecoration(labelText: 'Lastname'),
-                ),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
-                ),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText:
-                      true, // Set obscureText to true for password fields
-                ),
-                TextField(
-                  controller: _phoneNumberController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter
-                        .digitsOnly, // Ensures only digits can be typed
-                  ],
-                  decoration: InputDecoration(labelText: 'Phone Number'),
-                ),
-                TextField(
-                  controller: _addressController,
-                  decoration: InputDecoration(labelText: 'Address'),
-                ),
-                TextField(
-                  controller: _pinCodeController,
-                  decoration: InputDecoration(labelText: 'Pin Code'),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => _signUp(context),
-                  child: Text('Sign Up'),
-                ),
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(title: Text('Sign Up')),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
+                controller: _loginController,
+                decoration: InputDecoration(labelText: 'Username'),
+              ),
+              TextField(
+                controller: _firstNameController,
+                decoration: InputDecoration(labelText: 'Firstname'),
+              ),
+              TextField(
+                controller: _lastNameController,
+                decoration: InputDecoration(labelText: 'Lastname'),
+              ),
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
+              TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText:
+                    true, // Set obscureText to true for password fields
+              ),
+              TextField(
+                controller: _phoneNumberController,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter
+                      .digitsOnly, // Ensures only digits can be typed
+                ],
+                decoration: InputDecoration(labelText: 'Phone Number'),
+              ),
+              TextField(
+                controller: _addressController,
+                decoration: InputDecoration(labelText: 'Address'),
+              ),
+              TextField(
+                controller: _pinCodeController,
+                decoration: InputDecoration(labelText: 'Pin Code'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _signUp(context),
+                child: Text('Sign Up'),
+              ),
+            ],
           ),
         ),
       ),
