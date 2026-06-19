@@ -8,8 +8,8 @@ class HomeAppBarActions extends StatefulWidget {
   });
 
   /// Called when user selects Dark/Light theme.
-  final ValueChanged<ThemeMode> onThemeChanged;           
-    
+  final ValueChanged<ThemeMode> onThemeChanged;
+
   /// Called when user selects a language.
   final ValueChanged<Locale> onLocaleChanged;
 
@@ -19,7 +19,6 @@ class HomeAppBarActions extends StatefulWidget {
 
 class _HomeAppBarActionsState extends State<HomeAppBarActions> {
   ThemeMode _themeMode = ThemeMode.system;
-  Locale _locale = const Locale('en', '');
 
   @override
   Widget build(BuildContext context) {
@@ -47,19 +46,12 @@ class _HomeAppBarActionsState extends State<HomeAppBarActions> {
         // Language switch (UI language)
         PopupMenuButton<Locale>(
           tooltip: 'Language',
-          initialValue: _locale,
           icon: const Icon(Icons.language_outlined),
           itemBuilder: (context) => const [
             PopupMenuItem(value: Locale('en', ''), child: Text('English')),
-            // Add more languages here if you have arb/localization files.
-            // Example:
-            // PopupMenuItem(
-            //   value: Locale('ta', ''),
-            //   child: Text('தமிழ்'),
-            // ),
+            PopupMenuItem(value: Locale('ml', ''), child: Text(' മലയാളം')),
           ],
           onSelected: (loc) {
-            setState(() => _locale = loc);
             widget.onLocaleChanged(loc);
           },
         ),

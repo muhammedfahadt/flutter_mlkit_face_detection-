@@ -6,7 +6,9 @@ import 'app_home_page.dart';
 import 'managed_user_widget.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});  
+    final Function(Locale) onLocaleChanged;
+
+  const LoginForm({super.key, required this. onLocaleChanged});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -73,7 +75,9 @@ class _LoginFormState extends State<LoginForm> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const AppHomePage()),
+          MaterialPageRoute(
+            builder: (context) => AppHomePage(onLocaleChanged: (_) {}),
+          ),
         );
       } else {
         _showError(AppLocalizations.of(context)!.invalidCredentials);

@@ -9,8 +9,8 @@ import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
 ///
 /// Routes to feature pages instead of navigating directly from login/signup.
 class AppHomePage extends StatefulWidget {
-  const AppHomePage({super.key});
-
+  final Function(Locale) onLocaleChanged;
+  const AppHomePage({super.key, required this.onLocaleChanged});
   @override
   State<AppHomePage> createState() => _AppHomePageState();
 }
@@ -22,7 +22,6 @@ class _AppHomePageState extends State<AppHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -36,6 +35,7 @@ class _AppHomePageState extends State<AppHomePage> {
               },
               onLocaleChanged: (locale) {
                 setState(() => _locale = locale);
+                widget.onLocaleChanged(locale);
               },
             ),
           ),
@@ -66,7 +66,11 @@ class _AppHomePageState extends State<AppHomePage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const CameraApp()),
+                        MaterialPageRoute(
+                          builder: (_) => CameraApp(
+                            onLocaleChanged: widget.onLocaleChanged,
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -76,7 +80,10 @@ class _AppHomePageState extends State<AppHomePage> {
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) => const LoginForm()),
+                        MaterialPageRoute(
+                          builder: (_) =>
+                               LoginForm(onLocaleChanged: (_) {}),
+                        ),
                       );
                     },
                   ),
@@ -88,8 +95,7 @@ class _AppHomePageState extends State<AppHomePage> {
       ),
     );
   }
-} 
-
+}
 
 class _HomeActionCard extends StatelessWidget {
   final IconData icon;
