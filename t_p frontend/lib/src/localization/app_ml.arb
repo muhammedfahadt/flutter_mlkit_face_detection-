@@ -1,0 +1,58 @@
+{
+  "appTitle": "ട്രാഫിക് പട്രോൾ",
+  "@appTitle": { "description": "The title of the application" },
+
+  "home": "ഹോം",
+  "@home": { "description": "Home page title" },
+
+  "camera": "ക്യാമറ",
+  "@camera": { "description": "Home action label: Camera" },
+
+  "upload": "അപ്‌ലോഡ്",
+  "@upload": { "description": "Home action label: Upload" },
+
+  "login": "ലോഗിൻ",
+  "@login": { "description": "Home action label: Login" },
+
+  "settings": "ക്രമീകരണങ്ങൾ",
+  "@settings": { "description": "Settings button label" },
+
+  "theme": "തീം",
+  "@theme": { "description": "Theme menu label" },
+
+  "language": "ഭാഷ",
+  "@language": { "description": "Language menu label" },
+
+  "light": "ലൈറ്റ്",
+  "@light": { "description": "Theme option: Light" },
+
+  "dark": "ഡാർക്ക്",
+  "@dark": { "description": "Theme option: Dark" },
+
+  "system": "സിസ്റ്റം",
+  "@system": { "description": "Theme option: System" },
+
+  "english": "ഇംഗ്ലീഷ്",
+  "@english": { "description": "Language option: English" },
+
+  "loginFailed": "ലോഗിൻ പരാജയപ്പെട്ടു",
+  "@loginFailed": { "description": "Title shown when login fails" },
+
+  "ok": "ശരി",
+  "@ok": { "description": "Generic OK button label" },
+
+  "usernamePasswordRequired": "ഉപയോക്തൃനാമവും പാസ്‌വേഡും ആവശ്യമാണ്.",
+  "@usernamePasswordRequired": { "description": "Validation message for empty username/password" },
+
+  "invalidCredentials": "തെറ്റായ ഉപയോക്തൃനാമം അല്ലെങ്കിൽ പാസ്‌വേഡ്.",
+  "@invalidCredentials": { "description": "Validation message for wrong credentials" },
+
+  "username": "ഉപയോക്തൃനാമം",
+  "@username": { "description": "Login form username field" },
+
+  "password": "പാസ്‌വേഡ്",
+  "@password": { "description": "Login form password field" },
+
+  "dontHaveAccountSignUp": "അക്കൗണ്ട് ഇല്ലേ? സൈൻ അപ്പ് ചെയ്യുക",
+  "@dontHaveAccountSignUp": { "description": "Link to signup page" }
+}
