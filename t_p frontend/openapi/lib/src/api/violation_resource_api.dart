@@ -54,8 +54,8 @@ class ViolationResourceApi {
       },
       contentType: 'application/json',
       validateStatus: validateStatus,
-    );
-
+    );   
+                   
     dynamic _bodyData;
 
     try {
@@ -112,8 +112,8 @@ class ViolationResourceApi {
       statusMessage: _response.statusMessage,
       extra: _response.extra,
     );
-  }
-
+  }   
+   
   /// deleteViolation
   /// 
   ///
