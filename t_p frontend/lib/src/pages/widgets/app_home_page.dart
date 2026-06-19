@@ -58,19 +58,10 @@ class _AppHomePageState extends State<AppHomePage> {
                 runSpacing: 12,
                 alignment: WrapAlignment.center,
                 children: [
-                  _HomeActionCard(
-                    icon: Icons.camera_alt_outlined,
-                    title: 'Camera',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const CameraApp()),
-                      );
-                    },
-                  ),
+                  
                   _HomeActionCard(
                     icon: Icons.upload_file_outlined,
-                    title: 'Upload',
+                    title: 'Upload with Camera',
                     onTap: () {
                       // upload_widget.dart currently hosts the camera/upload flow.
                       Navigator.push(
