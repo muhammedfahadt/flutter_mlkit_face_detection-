@@ -82,5 +82,16 @@ class CameraService {
     );
 
     debugPrint('Violation created.');
+
+    await _openapi.getPointsResourceApi().createPoints(
+      pointsDTO: PointsDTO(
+        (b) => b
+          ..appUser = (AppUserDTOBuilder()..id = _currentUser?.id)
+          ..pointsEarned = 10
+          ..uploadDateTime = DateTime.now().toUtc().toIso8601String() as DateTime
+        
+            ),
+      headers: {'Authorization': 'Bearer ${Openapi.bearerToken}'},
+    );
   }
 }
