@@ -1,6 +1,50 @@
 {
-  "appTitle": "flutter_application_sample",
+  "appTitle": "Traffic Patrol",
   "@appTitle": {
     "description": "The title of the application"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home page title"
+  },
+  "camera": "Camera",
+  "@camera": {
+    "description": "Home action label: Camera"
+  },
+  "upload": "Upload",
+  "@upload": {
+    "description": "Home action label: Upload"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Home action label: Login"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings button label"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme menu label"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language menu label"
+  },
+  "light": "Light",
+  "@light": {
+    "description": "Theme option: Light"
+  },
+  "dark": "Dark",
+  "@dark": {
+    "description": "Theme option: Dark"
+  },
+  "system": "System",
+  "@system": {
+    "description": "Theme option: System"
+  },
+  "english": "English",
+  "@english": {
+    "description": "Language option: English"
   }
 }
