@@ -165,6 +165,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get english;
+
+  /// Title shown when login fails
+  ///
+  /// In en, this message translates to:
+  /// **'Login Failed'**
+  String get loginFailed;
+
+  /// Generic OK button label
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// Validation message for empty username/password
+  ///
+  /// In en, this message translates to:
+  /// **'Username and password are required.'**
+  String get usernamePasswordRequired;
+
+  /// Validation message for wrong credentials
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid username or password.'**
+  String get invalidCredentials;
+
+  /// Login form username field
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// Login form password field
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Link to signup page
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? Sign Up'**
+  String get dontHaveAccountSignUp;
 }
 
 class _AppLocalizationsDelegate

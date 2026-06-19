@@ -43,4 +43,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get english => 'English';
+
+  @override
+  String get loginFailed => 'Login Failed';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get usernamePasswordRequired => 'Username and password are required.';
+
+  @override
+  String get invalidCredentials => 'Invalid username or password.';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get dontHaveAccountSignUp => 'Don\'t have an account? Sign Up';
 }
