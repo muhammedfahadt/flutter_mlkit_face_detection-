@@ -16,11 +16,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Ensure controller has an initial ThemeMode to prevent null crashes
     // (SettingsController.themeMode is late-initialized).
-    if (settingsController.themeMode == null) {
-      // ignore: invalid_use_of_protected_member
-      settingsController.loadSettings();
-    }
-
     return ListenableBuilder(
       listenable: settingsController,
       builder: (BuildContext context, Widget? child) {
