@@ -3,48 +3,59 @@
   "@appTitle": {
     "description": "The title of the application"
   },
+
   "home": "Home",
-  "@home": {
-    "description": "Home page title"
-  },
+  "@home": { "description": "Home page title" },
+
   "camera": "Camera",
-  "@camera": {
-    "description": "Home action label: Camera"
-  },
+  "@camera": { "description": "Home action label: Camera" },
+
   "upload": "Upload",
-  "@upload": {
-    "description": "Home action label: Upload"
-  },
+  "@upload": { "description": "Home action label: Upload" },
+
   "login": "Login",
-  "@login": {
-    "description": "Home action label: Login"
-  },
+  "@login": { "description": "Home action label: Login" },
+
   "settings": "Settings",
-  "@settings": {
-    "description": "Settings button label"
-  },
+  "@settings": { "description": "Settings button label" },
+
   "theme": "Theme",
-  "@theme": {
-    "description": "Theme menu label"
-  },
+  "@theme": { "description": "Theme menu label" },
+
   "language": "Language",
-  "@language": {
-    "description": "Language menu label"
-  },
+  "@language": { "description": "Language menu label" },
+
   "light": "Light",
-  "@light": {
-    "description": "Theme option: Light"
-  },
+  "@light": { "description": "Theme option: Light" },
+
   "dark": "Dark",
-  "@dark": {
-    "description": "Theme option: Dark"
-  },
+  "@dark": { "description": "Theme option: Dark" },
+
   "system": "System",
-  "@system": {
-    "description": "Theme option: System"
-  },
+  "@system": { "description": "Theme option: System" },
+
   "english": "English",
-  "@english": {
-    "description": "Language option: English"
-  }
+  "@english": { "description": "Language option: English" },
+
+  "loginFailed": "Login Failed",
+  "@loginFailed": { "description": "Title shown when login fails" },
+
+  "ok": "OK",
+  "@ok": { "description": "Generic OK button label" },
+
+  "usernamePasswordRequired": "Username and password are required.",
+  "@usernamePasswordRequired": { "description": "Validation message for empty username/password" },
+
+  "invalidCredentials": "Invalid username or password.",
+  "@invalidCredentials": { "description": "Validation message for wrong credentials" },
+
+  "username": "Username",
+  "@username": { "description": "Login form username field" },
+
+  "password": "Password",
+  "@password": { "description": "Login form password field" },
+
+  "dontHaveAccountSignUp": "Don't have an account? Sign Up",
+  "@dontHaveAccountSignUp": { "description": "Link to signup page" }
 }
+

@@ -161,8 +161,9 @@ class _CameraAppState extends State<CameraApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (_controller?.value.isInitialized != true)
+    if (_controller?.value.isInitialized != true) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
 
     return Scaffold(
       backgroundColor: Colors.black,

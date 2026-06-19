@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'login_form.dart';
-import 'upload_widget.dart';
+import 'package:traffic_patrol/src/localization/app_localizations.dart';
 import 'package:traffic_patrol/src/pages/widgets/home_appbar_actions.dart';
-import 'package:traffic_patrol/src/app.dart';
-
-// upload_widget.dart defines CameraApp; reuse it for the Camera action.
+import 'package:traffic_patrol/src/pages/widgets/login_form.dart';
+import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
 
 /// Post-login landing page.
 ///
@@ -18,25 +16,26 @@ class AppHomePage extends StatefulWidget {
 }
 
 class _AppHomePageState extends State<AppHomePage> {
+  // UI-only state (app theme/language are handled elsewhere in this project).
   ThemeMode _themeMode = ThemeMode.system;
   Locale _locale = const Locale('en', '');
 
   @override
   Widget build(BuildContext context) {
+
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Traffic Patrol'),
+        title: Text(localizations?.appTitle ?? 'Traffic Patrol'),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: HomeAppBarActions(
               onThemeChanged: (mode) {
                 setState(() => _themeMode = mode);
-                // UI-only switch; app theme is managed by Settings screen.
               },
               onLocaleChanged: (locale) {
                 setState(() => _locale = locale);
-                // UI-only language switch (project currently supports English).
               },
             ),
           ),
@@ -48,9 +47,12 @@ class _AppHomePageState extends State<AppHomePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Home',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              Text(
+                localizations?.home ?? 'Home',
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
               Wrap(
@@ -58,22 +60,19 @@ class _AppHomePageState extends State<AppHomePage> {
                 runSpacing: 12,
                 alignment: WrapAlignment.center,
                 children: [
-                  
                   _HomeActionCard(
                     icon: Icons.upload_file_outlined,
-                    title: 'Upload with Camera',
+                    title: localizations?.upload ?? 'Upload',
                     onTap: () {
-                      // upload_widget.dart currently hosts the camera/upload flow.
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const CameraApp()),
                       );
                     },
                   ),
-
                   _HomeActionCard(
                     icon: Icons.login_outlined,
-                    title: 'Login',
+                    title: localizations?.login ?? 'Login',
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
@@ -89,7 +88,8 @@ class _AppHomePageState extends State<AppHomePage> {
       ),
     );
   }
-}
+} 
+
 
 class _HomeActionCard extends StatelessWidget {
   final IconData icon;

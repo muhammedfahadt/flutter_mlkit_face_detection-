@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
+import 'package:traffic_patrol/src/localization/app_localizations.dart';
 
 import 'app_home_page.dart';
 import 'managed_user_widget.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  const LoginForm({super.key});  
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -28,12 +29,12 @@ class _LoginFormState extends State<LoginForm> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Login Failed'),
+        title: Text(AppLocalizations.of(context)!.loginFailed),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: Text(AppLocalizations.of(context)!.ok),
           ),
         ],
       ),
@@ -45,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
     final password = _passwordController.text;
 
     if (username.isEmpty || password.isEmpty) {
-      _showError('Username and password are required.');
+      _showError(AppLocalizations.of(context)!.usernamePasswordRequired);
       return;
     }
 
@@ -69,25 +70,25 @@ class _LoginFormState extends State<LoginForm> {
         Openapi.bearerToken = result.data!.idToken!;
 
         if (!mounted) return;
-        // Avoid referencing CameraApp here unless it's guaranteed to be available.
-        // If your app has a home screen widget, swap this to Navigator.pushReplacement.
-        Text('Login successful! Token: ${result.data!.idToken}');
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const AppHomePage()),
         );
       } else {
-        _showError('Invalid username or password.');
+        _showError(AppLocalizations.of(context)!.invalidCredentials);
       }
     } catch (e, st) {
       debugPrint('Login error: $e');
       debugPrintStack(stackTrace: st);
-      _showError('Invalid username or password.');
+      _showError(AppLocalizations.of(context)!.invalidCredentials);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -104,12 +105,12 @@ class _LoginFormState extends State<LoginForm> {
                   const SizedBox(height: 16.0),
                   TextField(
                     controller: _usernameController,
-                    decoration: const InputDecoration(labelText: 'Username'),
+                    decoration: InputDecoration(labelText: l10n.username),
                   ),
                   const SizedBox(height: 16.0),
                   TextField(
                     controller: _passwordController,
-                    decoration: const InputDecoration(labelText: 'Password'),
+                    decoration: InputDecoration(labelText: l10n.password),
                     obscureText: true,
                   ),
                   const SizedBox(height: 16.0),
@@ -117,7 +118,7 @@ class _LoginFormState extends State<LoginForm> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _login,
-                      child: const Text('Login'),
+                      child: Text(l10n.login),
                     ),
                   ),
                   const SizedBox(height: 16.0),
@@ -128,9 +129,9 @@ class _LoginFormState extends State<LoginForm> {
                         MaterialPageRoute(builder: (context) => SignUpPage()),
                       );
                     },
-                    child: const Text(
-                      "Don't have an account? Sign Up",
-                      style: TextStyle(color: Colors.blue),
+                    child: Text(
+                      l10n.dontHaveAccountSignUp,
+                      style: const TextStyle(color: Colors.blue),
                     ),
                   ),
                 ],

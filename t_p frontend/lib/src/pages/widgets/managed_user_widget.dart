@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:traffic_patrol/src/pages/widgets/config.dart';
 import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
+
+import 'package:traffic_patrol/src/localization/app_localizations.dart';
+
 import 'package:openapi/openapi.dart';
 
 import 'app_home_page.dart';
+import 'package:traffic_patrol/src/localization/app_localizations.dart';
 
 class ManagedUser {
   final String id;
@@ -43,6 +47,8 @@ class AppUser {
 }
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -56,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _pinCodeController = TextEditingController();
-  Openapi _openapi = Openapi();
+  final Openapi _openapi = Openapi();
   Future<void> _signUp(BuildContext context) async {
     try {
       ManagedUserVMBuilder managedUserVMBuilder = ManagedUserVMBuilder()
@@ -142,9 +148,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 content: Text('User registered'),
                 actions: [
                   TextButton(
-onPressed: () => Navigator.pushReplacement(
+                    onPressed: () => Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const AppHomePage()),
+                      MaterialPageRoute(
+                        builder: (context) => const AppHomePage(),
+                      ),
                     ),
 
                     child: Text('OK'),

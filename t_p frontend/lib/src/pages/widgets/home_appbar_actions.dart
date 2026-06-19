@@ -8,8 +8,8 @@ class HomeAppBarActions extends StatefulWidget {
   });
 
   /// Called when user selects Dark/Light theme.
-  final ValueChanged<ThemeMode> onThemeChanged;
-
+  final ValueChanged<ThemeMode> onThemeChanged;           
+    
   /// Called when user selects a language.
   final ValueChanged<Locale> onLocaleChanged;
 
