@@ -1,8 +1,8 @@
+import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
+import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 import 'package:traffic_patrol/src/pages/widgets/camera_service.dart';
-
 import 'app_home_page.dart';
 
 class CameraApp extends StatefulWidget {
@@ -18,9 +18,23 @@ class _CameraAppState extends State<CameraApp> {
   final CameraService _service = CameraService();
   final TextEditingController _descController = TextEditingController();
 
+  // Object detector — uses the base model (no custom .tflite needed)
+  late final ObjectDetector _objectDetector;
+  List<DetectedObject> _detectedObjects = [];
+  Size _imageSize = Size.zero;
+  bool _isProcessing = false;
+
   @override
   void initState() {
     super.initState();
+    _objectDetector = ObjectDetector(
+      options: ObjectDetectorOptions(
+        // ✅ Use the bundled base model — no tflite file needed
+        mode: DetectionMode.stream,         // stream for live preview
+        classifyObjects: true,              // enables label output
+        multipleObjects: true,              // detect all objects per frame
+      ),
+    );
     _initializeCamera();
   }
 
@@ -28,134 +42,191 @@ class _CameraAppState extends State<CameraApp> {
     try {
       final cameras = await availableCameras();
       if (cameras.isEmpty) return;
-
-      _controller = CameraController(cameras[0], ResolutionPreset.medium);
+      _controller = CameraController(
+        cameras[0],
+        ResolutionPreset.medium,
+        enableAudio: false,
+      );
       await _controller!.initialize();
 
-      if (mounted) {
-        setState(() {}); // This tells Flutter to rebuild and remove the spinner
-      }
+      // ✅ Stream frames into detector instead of one-shot labeling
+      _controller!.startImageStream(_processFrame);
+
+      if (mounted) setState(() {});
     } catch (e) {
       debugPrint("Camera error: $e");
     }
   }
 
-  // Don't forget to dispose the controller when the screen closes!
-  @override
-  void dispose() {
-    _controller?.dispose();
-    _descController.dispose();
-    super.dispose();
+  // ─── Frame processing ───────────────────────────────────────────────────────
+
+  Future<void> _processFrame(CameraImage image) async {
+    if (_isProcessing) return;  // drop frames while busy
+    _isProcessing = true;
+
+    try {
+      final inputImage = _buildInputImage(image);
+      if (inputImage == null) return;
+
+      final objects = await _objectDetector.processImage(inputImage);
+
+      if (mounted) {
+        setState(() {
+          _detectedObjects = objects;
+          _imageSize = Size(
+            image.width.toDouble(),
+            image.height.toDouble(),
+          );
+        });
+      }
+    } catch (e) {
+      debugPrint("Detection error: $e");
+    } finally {
+      _isProcessing = false;
+    }
   }
 
-  // Helper to handle the dialog and upload flow
-  void _handleCapture() async {
-    final photo = await _controller?.takePicture();
-    if (photo == null) return;
-
-    if (!mounted) return;
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (ctx) => const Center(child: CircularProgressIndicator()),
+  InputImage? _buildInputImage(CameraImage image) {
+    final camera = _controller!.description;
+    final rotation = InputImageRotationValue.fromRawValue(
+      camera.sensorOrientation,
     );
+    if (rotation == null) return null;
 
-    String aiDescription = "";
-    try {
-      final inputImage = InputImage.fromFilePath(photo.path);
-      final imageLabeler = ImageLabeler(
-        options: ImageLabelerOptions(confidenceThreshold: 0.6),
-      );
-      final labels = await imageLabeler.processImage(inputImage);
+    final format = InputImageFormatValue.fromRawValue(image.format.raw);
+    if (format == null) return null;
 
-      final trafficKeywords = [
-        'Car',
-        'Vehicle',
-        'Motorcycle',
-        'Truck',
-        'Bus',
-        'Bicycle',
-        'Traffic',
-        'License plate',
-        'Wheel',
-        'Tire',
-      ];
+    return InputImage.fromBytes(
+      bytes: image.planes[0].bytes,
+      metadata: InputImageMetadata(
+        size: Size(image.width.toDouble(), image.height.toDouble()),
+        rotation: rotation,
+        format: format,
+        bytesPerRow: image.planes[0].bytesPerRow,
+      ),
+    );
+  }
 
-      List<String> detected = [];
-      bool possibleViolation = false;
+  // ─── Violation logic (rule engine) ──────────────────────────────────────────
 
-      for (ImageLabel label in labels) {
-        detected.add(
-          "${label.label} (${(label.confidence * 100).toStringAsFixed(1)}%)",
-        );
-        if (trafficKeywords.any(
-          (kw) => label.label.toLowerCase().contains(kw.toLowerCase()),
-        )) {
-          possibleViolation = true;
-        }
-      }
+  String _analyzeViolations(List<DetectedObject> objects) {
+    final labels = objects
+        .expand((o) => o.labels)
+        .map((l) => l.text.toLowerCase())
+        .toSet();
 
-      if (detected.isNotEmpty) {
-        aiDescription = "AI Detection: ${detected.join(', ')}.";
-        if (possibleViolation) {
-          aiDescription = "Traffic violation candidate. $aiDescription";
-        }
-      }
-      imageLabeler.close();
-    } catch (e) {
-      debugPrint("ML Kit error: $e");
+    final List<String> violations = [];
+
+    // Rule 1: motorcycle/bicycle present but no helmet detected
+    if ((labels.contains('motorcycle') || labels.contains('bicycle')) &&
+        !labels.contains('helmet') &&
+        labels.contains('person')) {
+      violations.add('No helmet on rider');
+    }
+
+    // Rule 2: vehicle near red traffic light
+    if (labels.contains('traffic light') &&
+        (labels.contains('car') ||
+            labels.contains('motorcycle') ||
+            labels.contains('truck'))) {
+      violations.add('Vehicle near signal — possible signal jump');
+    }
+
+    // Rule 3: count persons on a single vehicle
+    final personCount = objects
+        .where((o) =>
+            o.labels.any((l) => l.text.toLowerCase() == 'person'))
+        .length;
+    if (personCount >= 3 &&
+        (labels.contains('motorcycle') || labels.contains('bicycle'))) {
+      violations.add('Vehicle overloading ($personCount persons)');
+    }
+
+    if (violations.isEmpty && objects.isNotEmpty) {
+      final names = objects
+          .map((o) => o.labels.isNotEmpty ? o.labels.first.text : 'Object')
+          .join(', ');
+      return 'Detected: $names. No clear violation.';
+    } else if (violations.isNotEmpty) {
+      return '⚠️ Violation: ${violations.join('; ')}';
+    }
+    return '';
+  }
+
+  // ─── Capture & upload ────────────────────────────────────────────────────────
+
+  void _handleCapture() async {
+    // Pause stream so takePicture() doesn't conflict
+    await _controller?.stopImageStream();
+
+    final photo = await _controller?.takePicture();
+    if (photo == null) {
+      await _controller?.startImageStream(_processFrame);
+      return;
     }
 
     if (!mounted) return;
-    Navigator.pop(context); // Dismiss loading dialog
 
+    final aiDescription = _analyzeViolations(_detectedObjects);
     _descController.text = aiDescription;
 
     final bytes = await photo.readAsBytes();
-
     if (!mounted) return;
 
     final description = await showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Enter Description'),
+        title: const Text('Describe the violation'),
         content: TextField(
           controller: _descController,
           maxLines: 3,
           decoration: const InputDecoration(
-            hintText: 'Describe the violation...',
+            hintText: 'Edit or confirm the AI description...',
           ),
         ),
         actions: [
           TextButton(
+            onPressed: () => Navigator.pop(ctx), // cancel
+            child: const Text('Cancel'),
+          ),
+          TextButton(
             onPressed: () => Navigator.pop(ctx, _descController.text),
-            child: const Text('OK'),
+            child: const Text('Upload'),
           ),
         ],
       ),
     );
-    if (description == null) {
-      debugPrint('description is null');
-    }
 
-    if (description != null) {
+    // Resume stream regardless
+    if (mounted) await _controller?.startImageStream(_processFrame);
+
+    if (description != null && description.isNotEmpty) {
       try {
         await _service.uploadPhoto(imageBytes: bytes, description: description);
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Success!')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Uploaded successfully!')),
+          );
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Error: $e')));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Upload error: $e')));
         }
       }
     }
   }
+
+  @override
+  void dispose() {
+    _controller?.stopImageStream();
+    _controller?.dispose();
+    _objectDetector.close();
+    _descController.dispose();
+    super.dispose();
+  }
+
+  // ─── UI ──────────────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
@@ -173,24 +244,56 @@ class _CameraAppState extends State<CameraApp> {
           IconButton(
             tooltip: 'Home',
             icon: const Icon(Icons.home_outlined),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (_) =>  AppHomePage( onLocaleChanged: (_) {})),
-                (_) => false,
-              );
-            },
+            onPressed: () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => AppHomePage(onLocaleChanged: (_) {}),
+              ),
+              (_) => false,
+            ),
           ),
         ],
       ),
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          AspectRatio(
-            aspectRatio: _controller!.value.aspectRatio,
-            child: CameraPreview(_controller!),
-          ),
+          CameraPreview(_controller!),
+          // ✅ Draw bounding boxes over live preview
+          if (_detectedObjects.isNotEmpty)
+            CustomPaint(
+              painter: BoundingBoxPainter(
+                objects: _detectedObjects,
+                imageSize: _imageSize,
+                previewSize: MediaQuery.of(context).size,
+              ),
+            ),
+          _buildViolationBanner(),
           _buildControls(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildViolationBanner() {
+    final desc = _analyzeViolations(_detectedObjects);
+    if (desc.isEmpty) return const SizedBox.shrink();
+    final isViolation = desc.startsWith('⚠️');
+    return Positioned(
+      top: 12,
+      left: 12,
+      right: 12,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: isViolation
+              ? Colors.red.withOpacity(0.85)
+              : Colors.black.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          desc,
+          style: const TextStyle(color: Colors.white, fontSize: 13),
+        ),
       ),
     );
   }
@@ -221,4 +324,67 @@ class _CameraAppState extends State<CameraApp> {
       ),
     );
   }
+}
+
+// ─── Bounding box overlay ────────────────────────────────────────────────────
+
+class BoundingBoxPainter extends CustomPainter {
+  final List<DetectedObject> objects;
+  final Size imageSize;
+  final Size previewSize;
+
+  BoundingBoxPainter({
+    required this.objects,
+    required this.imageSize,
+    required this.previewSize,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (imageSize == Size.zero) return;
+
+    final scaleX = previewSize.width / imageSize.width;
+    final scaleY = previewSize.height / imageSize.height;
+
+    final boxPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0
+      ..color = Colors.greenAccent;
+
+    final violationPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5
+      ..color = Colors.redAccent;
+
+    for (final obj in objects) {
+      final r = obj.boundingBox;
+      final rect = Rect.fromLTRB(
+        r.left * scaleX,
+        r.top * scaleY,
+        r.right * scaleX,
+        r.bottom * scaleY,
+      );
+
+      final label =
+          obj.labels.isNotEmpty ? obj.labels.first.text : 'Object';
+      final isViolationObj = ['motorcycle', 'bicycle', 'traffic light']
+          .contains(label.toLowerCase());
+
+      canvas.drawRect(rect, isViolationObj ? violationPaint : boxPaint);
+
+      // Draw label
+      final tp = TextPainter(
+        text: TextSpan(
+          text: label,
+          style: const TextStyle(color: Colors.white, fontSize: 12),
+        ),
+        textDirection: ui.TextDirection.ltr,
+      )..layout();
+      tp.paint(canvas, Offset(rect.left + 4, rect.top + 4));
+    }
+  }
+
+  @override
+  bool shouldRepaint(BoundingBoxPainter old) =>
+      old.objects != objects || old.previewSize != previewSize;
 }
