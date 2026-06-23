@@ -65,7 +65,7 @@
   "aiPoweredTrafficSystem": "AI സഹായത്തോടെ ട്രാഫിക്\nനിയന്ത്രണ വിധാനം",
   "@aiPoweredTrafficSystem": { "description": "Hero section main title" },
 
-  "captureDetectReportProtect": "പകരം · കണ്ടെത്തുക · റിപ്പോർട്ട് · സംരക്ഷിക്കുക",
+  "captureDetectReportProtect": " പിടിക്കുക · കണ്ടെത്തുക · റിപ്പോർട്ട് · സംരക്ഷിക്കുക",
   "@captureDetectReportProtect": { "description": "Hero section tagline" },
 
   "systemOnline": "സിസ്റ്റം ഓണ്‍ലൈനില്‍",

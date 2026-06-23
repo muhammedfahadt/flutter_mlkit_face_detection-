@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// The title of the application
   ///
   /// In en, this message translates to:
-  /// **'Traffic Patrol'**
+  /// **'Traffic Patrol V2.1'**
   String get appTitle;
 
   /// Home page title
@@ -211,6 +211,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t have an account? Sign Up'**
   String get dontHaveAccountSignUp;
+
+  /// App bar title in home page
+  ///
+  /// In en, this message translates to:
+  /// **'TRAFFIC PATROL  v2.1'**
+  String get appBarTitle;
+
+  /// Hero section subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'AUTOMATED VIOLATION DETECTION'**
+  String get automatedViolationDetection;
+
+  /// Hero section main title
+  ///
+  /// In en, this message translates to:
+  /// **'AI-Powered Traffic\nEnforcement System'**
+  String get aiPoweredTrafficSystem;
+
+  /// Hero section tagline
+  ///
+  /// In en, this message translates to:
+  /// **'Capture · Detect · Report · Protect'**
+  String get captureDetectReportProtect;
+
+  /// Status bar text indicating system is online
+  ///
+  /// In en, this message translates to:
+  /// **'SYSTEM ONLINE'**
+  String get systemOnline;
+
+  /// ML Kit status indicator
+  ///
+  /// In en, this message translates to:
+  /// **'ML KIT  ●  ACTIVE'**
+  String get mlKitActive;
+
+  /// Grid section header text
+  ///
+  /// In en, this message translates to:
+  /// **'SELECT OPERATION'**
+  String get selectOperation;
+
+  /// Primary action card label
+  ///
+  /// In en, this message translates to:
+  /// **'CAPTURE VIOLATION'**
+  String get captureViolation;
+
+  /// Primary action card sublabel
+  ///
+  /// In en, this message translates to:
+  /// **'Open camera · detect · report'**
+  String get openCameraDetectReport;
+
+  /// Violations page and menu item label
+  ///
+  /// In en, this message translates to:
+  /// **'Violations'**
+  String get violations;
+
+  /// Tag for violations grid card
+  ///
+  /// In en, this message translates to:
+  /// **'RECORDS'**
+  String get records;
+
+  /// Points page label
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get points;
+
+  /// Tag for points grid card
+  ///
+  /// In en, this message translates to:
+  /// **'REWARDS'**
+  String get rewards;
+
+  /// Contents page label
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get contents;
+
+  /// Tag for contents grid card
+  ///
+  /// In en, this message translates to:
+  /// **'INFO'**
+  String get info;
+
+  /// Tag for login grid card
+  ///
+  /// In en, this message translates to:
+  /// **'ACCOUNT'**
+  String get account;
+
+  /// Footer copyright text
+  ///
+  /// In en, this message translates to:
+  /// **'TRAFFIC PATROL ENFORCEMENT SYSTEM  ©2025'**
+  String get footerText;
+
+  /// Camera page title
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get cameraPageTitle;
+
+  /// Dialog title for violation description
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the violation'**
+  String get describeViolation;
+
+  /// Hint text for violation description field
+  ///
+  /// In en, this message translates to:
+  /// **'Edit or confirm the AI description...'**
+  String get editOrConfirmDescription;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Success message after upload
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded successfully!'**
+  String get uploadSuccess;
+
+  /// No description provided for @uploadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload error: {error}'**
+  String uploadError(String error);
+
+  /// Violation message: no helmet detected
+  ///
+  /// In en, this message translates to:
+  /// **'No helmet on rider'**
+  String get noHelmetOnRider;
+
+  /// Violation message: vehicle near traffic light
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle near signal — possible signal jump'**
+  String get vehicleNearSignal;
+
+  /// No description provided for @vehicleOverloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle overloading ({count} persons)'**
+  String vehicleOverloading(int count);
+
+  /// No description provided for @detectedObjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected: {objects}. No clear violation.'**
+  String detectedObjects(String objects);
+
+  /// No description provided for @violationPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ Violation: {violations}'**
+  String violationPrefix(String violations);
+
+  /// Empty state message for contents page
+  ///
+  /// In en, this message translates to:
+  /// **'No contents found.'**
+  String get noContentsFound;
+
+  /// Empty state message for points page
+  ///
+  /// In en, this message translates to:
+  /// **'No points found.'**
+  String get noPointsFound;
+
+  /// Empty state message for violations page
+  ///
+  /// In en, this message translates to:
+  /// **'No violations found.'**
+  String get noViolationsFound;
+
+  /// Registration dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Registration'**
+  String get registration;
+
+  /// Success message after registration
+  ///
+  /// In en, this message translates to:
+  /// **'User registered'**
+  String get userRegistered;
+
+  /// Error message for failed registration
+  ///
+  /// In en, this message translates to:
+  /// **'Registration Failed'**
+  String get registrationFailed;
+
+  /// Error message asking user to retry
+  ///
+  /// In en, this message translates to:
+  /// **'Try once more'**
+  String get tryOnceMore;
+
+  /// Sign up page title and button label
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// First name field label in signup form
+  ///
+  /// In en, this message translates to:
+  /// **'Firstname'**
+  String get firstName;
+
+  /// Last name field label in signup form
+  ///
+  /// In en, this message translates to:
+  /// **'Lastname'**
+  String get lastName;
+
+  /// Email field label in signup form
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// Phone number field label in signup form
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// Address field label in signup form
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// Pin code field label in signup form
+  ///
+  /// In en, this message translates to:
+  /// **'Pin Code'**
+  String get pinCode;
+
+  /// Malayalam language display name
+  ///
+  /// In en, this message translates to:
+  /// **'മലയാളം'**
+  String get malayalam;
 }
 
 class _AppLocalizationsDelegate
