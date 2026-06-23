@@ -56,6 +56,163 @@
   "@password": { "description": "Login form password field" },
 
   "dontHaveAccountSignUp": "Don't have an account? Sign Up",
-  "@dontHaveAccountSignUp": { "description": "Link to signup page" }
+  "@dontHaveAccountSignUp": { "description": "Link to signup page" },
+
+  "appBarTitle": "TRAFFIC PATROL  v2.1",
+  "@appBarTitle": { "description": "App bar title in home page" },
+
+  "automatedViolationDetection": "AUTOMATED VIOLATION DETECTION",
+  "@automatedViolationDetection": { "description": "Hero section subtitle" },
+
+  "aiPoweredTrafficSystem": "AI-Powered Traffic\nEnforcement System",
+  "@aiPoweredTrafficSystem": { "description": "Hero section main title" },
+
+  "captureDetectReportProtect": "Capture · Detect · Report · Protect",
+  "@captureDetectReportProtect": { "description": "Hero section tagline" },
+
+  "systemOnline": "SYSTEM ONLINE",
+  "@systemOnline": { "description": "Status bar text indicating system is online" },
+
+  "mlKitActive": "ML KIT  ●  ACTIVE",
+  "@mlKitActive": { "description": "ML Kit status indicator" },
+
+  "selectOperation": "SELECT OPERATION",
+  "@selectOperation": { "description": "Grid section header text" },
+
+  "captureViolation": "CAPTURE VIOLATION",
+  "@captureViolation": { "description": "Primary action card label" },
+
+  "openCameraDetectReport": "Open camera · detect · report",
+  "@openCameraDetectReport": { "description": "Primary action card sublabel" },
+
+  "violations": "Violations",
+  "@violations": { "description": "Violations page and menu item label" },
+
+  "records": "RECORDS",
+  "@records": { "description": "Tag for violations grid card" },
+
+  "points": "Points",
+  "@points": { "description": "Points page label" },
+
+  "rewards": "REWARDS",
+  "@rewards": { "description": "Tag for points grid card" },
+
+  "contents": "Contents",
+  "@contents": { "description": "Contents page label" },
+
+  "info": "INFO",
+  "@info": { "description": "Tag for contents grid card" },
+
+  "account": "ACCOUNT",
+  "@account": { "description": "Tag for login grid card" },
+
+  "footerText": "TRAFFIC PATROL ENFORCEMENT SYSTEM  ©2025",
+  "@footerText": { "description": "Footer copyright text" },
+
+  "camera": "Camera",
+  "@camera": { "description": "Camera page title" },
+
+  "describeViolation": "Describe the violation",
+  "@describeViolation": { "description": "Dialog title for violation description" },
+
+  "editOrConfirmDescription": "Edit or confirm the AI description...",
+  "@editOrConfirmDescription": { "description": "Hint text for violation description field" },
+
+  "cancel": "Cancel",
+  "@cancel": { "description": "Cancel button label" },
+
+  "upload": "Upload",
+  "@upload": { "description": "Upload button label" },
+
+  "uploadSuccess": "Uploaded successfully!",
+  
+  "@uploadSuccess": { "description": "Success message after upload" },
+
+  "uploadError": "Upload error: {error}",
+  "@uploadError": { "description": "Error message during upload with placeholder for error details" },
+  "placeholders": {
+    "error": {
+      "type": "String",
+      "format": "plain"
+    }
+  },
+
+  "noHelmetOnRider": "No helmet on rider",
+  "@noHelmetOnRider": { "description": "Violation message: no helmet detected" },
+
+  "vehicleNearSignal": "Vehicle near signal — possible signal jump",
+  "@vehicleNearSignal": { "description": "Violation message: vehicle near traffic light" },
+
+  "vehicleOverloading": "Vehicle overloading ({count} persons)",
+  "@vehicleOverloading": { "description": "Violation message: too many persons on vehicle" },
+  "placeholders": {
+    "count": {
+      "type": "int",
+      "format": "compact"
+    }
+  },
+
+  "detectedObjects": "Detected: {objects}. No clear violation.",
+  "@detectedObjects": { "description": "Message when objects are detected but no violation found" },
+  "placeholders": {
+    "objects": {
+      "type": "String",
+      "format": "plain"
+    }
+  },
+
+  "violationPrefix": "⚠️ Violation: {violations}",
+  "@violationPrefix": { "description": "Prefix for violation messages" },
+  "placeholders": {
+    "violations": {
+      "type": "String",
+      "format": "plain"
+    }
+  },
+
+  "noContentsFound": "No contents found.",
+  "@noContentsFound": { "description": "Empty state message for contents page" },
+
+  "noPointsFound": "No points found.",
+  "@noPointsFound": { "description": "Empty state message for points page" },
+
+  "noViolationsFound": "No violations found.",
+  "@noViolationsFound": { "description": "Empty state message for violations page" },
+
+  "registration": "Registration",
+  "@registration": { "description": "Registration dialog title" },
+
+  "userRegistered": "User registered",
+  "@userRegistered": { "description": "Success message after registration" },
+
+  "registrationFailed": "Registration Failed",
+  "@registrationFailed": { "description": "Error message for failed registration" },
+
+  "tryOnceMore": "Try once more",
+  "@tryOnceMore": { "description": "Error message asking user to retry" },
+
+  "signUp": "Sign Up",
+  "@signUp": { "description": "Sign up page title and button label" },
+
+  "firstName": "Firstname",
+  "@firstName": { "description": "First name field label in signup form" },
+
+  "lastName": "Lastname",
+  "@lastName": { "description": "Last name field label in signup form" },
+
+  "email": "Email",
+  "@email": { "description": "Email field label in signup form" },
+
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": { "description": "Phone number field label in signup form" },
+
+  "address": "Address",
+  "@address": { "description": "Address field label in signup form" },
+
+  "pinCode": "Pin Code",
+  "@pinCode": { "description": "Pin code field label in signup form" },
+
+  "malayalam": "മലയാളം",
+  "@malayalam": { "description": "Malayalam language display name" }
 }
 
