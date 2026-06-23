@@ -1,0 +1,225 @@
+{
+  "appTitle": "ट्रैफिक पेट्रोल",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+
+  "home": "होम",
+  "@home": { "description": "Home page title" },
+
+  "camera": "कैमरा",
+  "@camera": { "description": "Home action label: Camera" },
+
+  "upload": "अपलोड",
+  "@upload": { "description": "Home action label: Upload" },
+
+  "login": "लॉगिन",
+  "@login": { "description": "Home action label: Login" },
+
+  "settings": "सेटिंग्स",
+  "@settings": { "description": "Settings button label" },
+
+  "theme": "थीम",
+  "@theme": { "description": "Theme menu label" },
+
+  "language": "भाषा",
+  "@language": { "description": "Language menu label" },
+
+  "light": "लाइट",
+  "@light": { "description": "Theme option: Light" },
+
+  "dark": "डार्क",
+  "@dark": { "description": "Theme option: Dark" },
+
+  "system": "सिस्टम",
+  "@system": { "description": "Theme option: System" },
+
+  "english": "अंग्रेज़ी",
+  "@english": { "description": "Language option: English" },
+
+  "loginFailed": "लॉगिन विफल",
+  "@loginFailed": { "description": "Title shown when login fails" },
+
+  "ok": "ठीक है",
+  "@ok": { "description": "Generic OK button label" },
+
+  "usernamePasswordRequired": "यूज़रनेम और पासवर्ड आवश्यक हैं।",
+  "@usernamePasswordRequired": { "description": "Validation message for empty username/password" },
+
+  "invalidCredentials": "गलत यूज़रनेम या पासवर्ड।",
+  "@invalidCredentials": { "description": "Validation message for wrong credentials" },
+
+  "username": "यूज़रनेम",
+  "@username": { "description": "Login form username field" },
+
+  "password": "पासवर्ड",
+  "@password": { "description": "Login form password field" },
+
+  "dontHaveAccountSignUp": "खाता नहीं है? साइन अप करें",
+  "@dontHaveAccountSignUp": { "description": "Link to signup page" },
+
+  "appBarTitle": "ट्रैफिक पेट्रोल v2.1",
+  "@appBarTitle": { "description": "App bar title in home page" },
+
+  "automatedViolationDetection": "स्वचालित उल्लंघन पता लगाना",
+  "@automatedViolationDetection": { "description": "Hero section subtitle" },
+
+  "aiPoweredTrafficSystem": "AI सक्षम ट्रैफिक\nप्रवर्तन प्रणाली",
+  "@aiPoweredTrafficSystem": { "description": "Hero section main title" },
+
+  "captureDetectReportProtect": "कैप्चर · पता लगाएं · रिपोर्ट · सुरक्षा",
+  "@captureDetectReportProtect": { "description": "Hero section tagline" },
+
+  "systemOnline": "सिस्टम ऑनलाइन",
+  "@systemOnline": { "description": "Status bar text indicating system is online" },
+
+  "mlKitActive": "ML किट ● सक्रिय",
+  "@mlKitActive": { "description": "ML Kit status indicator" },
+
+  "selectOperation": "ऑपरेशन चुने",
+  "@selectOperation": { "description": "Grid section header text" },
+
+  "captureViolation": "उल्लंघन कैप्चर करें",
+  "@captureViolation": { "description": "Primary action card label" },
+
+  "openCameraDetectReport": "कैमरा खोलें · पता लगाएं · रिपोर्ट",
+  "@openCameraDetectReport": { "description": "Primary action card sublabel" },
+
+  "violations": "उल्लंघन",
+  "@violations": { "description": "Violations page and menu item label" },
+
+  "records": "रिकॉर्ड",
+  "@records": { "description": "Tag for violations grid card" },
+
+  "points": "अंक",
+  "@points": { "description": "Points page label" },
+
+  "rewards": "पुरस्कार",
+  "@rewards": { "description": "Tag for points grid card" },
+
+  "contents": "सामग्री",
+  "@contents": { "description": "Contents page label" },
+
+  "info": "जानकारी",
+  "@info": { "description": "Tag for contents grid card" },
+
+  "account": "खाता",
+  "@account": { "description": "Tag for login grid card" },
+
+  "footerText": "ट्रैफिक पेट्रोल प्रवर्तन प्रणाली ©2025",
+  "@footerText": { "description": "Footer copyright text" },
+
+  "cameraPageTitle": "कैमरा",
+  "@cameraPageTitle": { "description": "Camera page title" },
+
+  "describeViolation": "उल्लंघन का वर्णन करें",
+  "@describeViolation": { "description": "Dialog title for violation description" },
+
+  "editOrConfirmDescription": "AI वर्णन संपादित करें या पुष्टि करें...",
+  "@editOrConfirmDescription": { "description": "Hint text for violation description field" },
+
+  "cancel": "रद्द करें",
+  "@cancel": { "description": "Cancel button label" },
+
+  "uploadSuccess": "सफलतापूर्वक अपलोड हो गया!",
+  "@uploadSuccess": { "description": "Success message after upload" },
+
+  "uploadError": "अपलोड त्रुटि: {error}",
+  "@uploadError": { "description": "Error message during upload with placeholder for error details" },
+
+  "noHelmetOnRider": "सवार पर हेलमेट नहीं",
+  "@noHelmetOnRider": { "description": "Violation message: no helmet detected" },
+
+  "vehicleNearSignal": "वाहन सिग्नल के पास - संभव सिग्नल तोड़ने का प्रयास",
+  "@vehicleNearSignal": { "description": "Violation message: vehicle near traffic light" },
+
+  "vehicleOverloading": "वाहन पर अधिक भार ({count} व्यक्ति)",
+  "@vehicleOverloading": { "description": "Violation message: too many persons on vehicle" },
+
+  "detectedObjects": "पाया गया: {objects}. कोई स्पष्ट उल्लंघन नहीं।",
+  "@detectedObjects": { "description": "Message when objects are detected but no violation found" },
+
+  "violationPrefix": "⚠️ उल्लंघन: {violations}",
+  "@violationPrefix": { "description": "Prefix for violation messages" },
+
+  "noContentsFound": "कोई सामग्री नहीं मिली।",
+  "@noContentsFound": { "description": "Empty state message for contents page" },
+
+  "noPointsFound": "कोई अंक नहीं मिले।",
+  "@noPointsFound": { "description": "Empty state message for points page" },
+
+  "noViolationsFound": "कोई उल्लंघन नहीं मिले।",
+  "@noViolationsFound": { "description": "Empty state message for violations page" },
+
+  "registration": "पंजीकरण",
+  "@registration": { "description": "Registration dialog title" },
+
+  "userRegistered": "उपयोक्ता पंजीकृत",
+  "@userRegistered": { "description": "Success message after registration" },
+
+  "registrationFailed": "पंजीकरण विफल",
+  "@registrationFailed": { "description": "Error message for failed registration" },
+
+  "tryOnceMore": "एक बार फिर कोशिश करें",
+  "@tryOnceMore": { "description": "Error message asking user to retry" },
+
+  "signUp": "साइन अप",
+  "@signUp": { "description": "Sign up page title and button label" },
+
+  "firstName": "प्रथम नाम",
+  "@firstName": { "description": "First name field label in signup form" },
+
+  "lastName": "अंतिम नाम",
+  "@lastName": { "description": "Last name field label in signup form" },
+
+  "email": "ईमेल",
+  "@email": { "description": "Email field label in signup form" },
+
+  "phoneNumber": "फोन नंबर",
+  "@phoneNumber": { "description": "Phone number field label in signup form" },
+
+  "address": "पता",
+  "@address": { "description": "Address field label in signup form" },
+
+  "pinCode": "पिन कोड",
+  "@pinCode": { "description": "Pin code field label in signup form" },
+
+  "malayalam": "मलयालम",
+  "@malayalam": { "description": "Malayalam language display name" },
+
+  "hindi": "हिंदी",
+  "@hindi": { "description": "Hindi language display name" },
+
+  "@uploadError": {
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  },
+  "@vehicleOverloading": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "@detectedObjects": {
+    "placeholders": {
+      "objects": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  },
+  "@violationPrefix": {
+    "placeholders": {
+      "violations": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  }
+}
