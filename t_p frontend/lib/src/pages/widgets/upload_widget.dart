@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
 import 'package:traffic_patrol/src/pages/widgets/camera_service.dart';
 import 'app_home_page.dart';
+import 'dart:typed_data';
 
 class CameraApp extends StatefulWidget {
   final Function(Locale) onLocaleChanged;
@@ -86,26 +87,122 @@ class _CameraAppState extends State<CameraApp> {
     }
   }
 
-  InputImage? _buildInputImage(CameraImage image) {
-    final camera = _controller!.description;
-    final rotation = InputImageRotationValue.fromRawValue(
-      camera.sensorOrientation,
-    );
-    if (rotation == null) return null;
+ // ─── Replace your entire _buildInputImage method with this ───────────────────
 
-    final format = InputImageFormatValue.fromRawValue(image.format.raw);
-    if (format == null) return null;
+InputImage? _buildInputImage(CameraImage image) {
+  // Step 1: Log what your phone actually outputs (remove after fix confirmed)
+  debugPrint('📷 Format: ${image.format.raw} | Planes: ${image.planes.length} '
+      '| Size: ${image.width}x${image.height}');
 
-    return InputImage.fromBytes(
-      bytes: image.planes[0].bytes,
-      metadata: InputImageMetadata(
-        size: Size(image.width.toDouble(), image.height.toDouble()),
-        rotation: rotation,
-        format: format,
-        bytesPerRow: image.planes[0].bytesPerRow,
-      ),
-    );
+  final rotation = _getRotation();
+  if (rotation == null) return null;
+
+  // Step 2: Try converting to NV21 — works on virtually all Android cameras
+  try {
+    final nv21Bytes = _convertToNv21(image);
+    if (nv21Bytes != null) {
+      return InputImage.fromBytes(
+        bytes: nv21Bytes,
+        metadata: InputImageMetadata(
+          size: Size(image.width.toDouble(), image.height.toDouble()),
+          rotation: rotation,
+          format: InputImageFormat.nv21,         // force NV21 — ML Kit loves this
+          bytesPerRow: image.width,              // NV21 stride = width
+        ),
+      );
+    }
+  } catch (e) {
+    debugPrint('NV21 conversion failed: $e');
   }
+
+  // Step 3: Fallback — try yuv_420_888 directly
+  try {
+    final format = InputImageFormatValue.fromRawValue(image.format.raw);
+    if (format != null && image.planes.isNotEmpty) {
+      return InputImage.fromBytes(
+        bytes: image.planes[0].bytes,
+        metadata: InputImageMetadata(
+          size: Size(image.width.toDouble(), image.height.toDouble()),
+          rotation: rotation,
+          format: format,
+          bytesPerRow: image.planes[0].bytesPerRow,
+        ),
+      );
+    }
+  } catch (e) {
+    debugPrint('Direct format fallback failed: $e');
+  }
+
+  debugPrint('❌ Could not convert image format: ${image.format.raw}');
+  return null;
+}
+
+// ─── YUV_420_888 → NV21 converter ────────────────────────────────────────────
+// Most Android cameras output YUV_420_888 (format raw = 35).
+// ML Kit's object detector requires NV21 (Y plane + interleaved VU).
+// This manually reorders the bytes into the NV21 layout.
+
+Uint8List? _convertToNv21(CameraImage image) {
+  if (image.planes.length < 2) return null;
+
+  final int width  = image.width;
+  final int height = image.height;
+
+  final yPlane  = image.planes[0];
+  final uPlane  = image.planes[1];
+  final vPlane  = image.planes[2];
+
+  final int ySize  = width * height;
+  final int uvSize = (width ~/ 2) * (height ~/ 2);
+
+  final nv21 = Uint8List(ySize + uvSize * 2);
+
+  // Copy Y plane row by row (handles row stride != width)
+  int nv21Index = 0;
+  for (int row = 0; row < height; row++) {
+    final rowStart = row * yPlane.bytesPerRow;
+    nv21.setRange(nv21Index, nv21Index + width, yPlane.bytes, rowStart);
+    nv21Index += width;
+  }
+
+  // Interleave V and U bytes → NV21 = Y + VU (not UV)
+  final int uvHeight = height ~/ 2;
+  final int uvWidth  = width  ~/ 2;
+  final int vStride  = vPlane.bytesPerRow;
+  final int uStride  = uPlane.bytesPerRow;
+  final int vPixelStride = vPlane.bytesPerPixel ?? 1;
+  final int uPixelStride = uPlane.bytesPerPixel ?? 1;
+
+  for (int row = 0; row < uvHeight; row++) {
+    for (int col = 0; col < uvWidth; col++) {
+      final vIndex = row * vStride + col * vPixelStride;
+      final uIndex = row * uStride + col * uPixelStride;
+
+      if (vIndex < vPlane.bytes.length && uIndex < uPlane.bytes.length) {
+        nv21[nv21Index++] = vPlane.bytes[vIndex]; // V first in NV21
+        nv21[nv21Index++] = uPlane.bytes[uIndex]; // then U
+      }
+    }
+  }
+
+  return nv21;
+}
+
+// ─── Sensor rotation helper ───────────────────────────────────────────────────
+InputImageRotation? _getRotation() {
+  final sensorOrientation = _controller!.description.sensorOrientation;
+  debugPrint('📐 Sensor orientation: $sensorOrientation°');
+
+  switch (sensorOrientation) {
+    case 0:   return InputImageRotation.rotation0deg;
+    case 90:  return InputImageRotation.rotation90deg;
+    case 180: return InputImageRotation.rotation180deg;
+    case 270: return InputImageRotation.rotation270deg;
+    default:
+      debugPrint('⚠️ Unknown sensor orientation: $sensorOrientation');
+      return InputImageRotation.rotation90deg; // safe default for most Android phones
+  }
+}
 
   // ─── Violation logic (rule engine) ──────────────────────────────────────────
 
