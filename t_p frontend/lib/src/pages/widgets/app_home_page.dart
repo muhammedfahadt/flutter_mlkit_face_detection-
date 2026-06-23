@@ -10,15 +10,15 @@ import 'package:traffic_patrol/src/pages/widgets/points_read_page.dart';
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 class _C {
-  static const bg       = Color(0xFF0A0E1A); // deep navy black
-  static const surface  = Color(0xFF111827); // card surface
-  static const border   = Color(0xFF1E2D45); // subtle border
-  static const amber    = Color(0xFFF59E0B); // alert amber — primary accent
+  static const bg = Color(0xFF0A0E1A); // deep navy black
+  static const surface = Color(0xFF111827); // card surface
+  static const border = Color(0xFF1E2D45); // subtle border
+  static const amber = Color(0xFFF59E0B); // alert amber — primary accent
   static const amberDim = Color(0xFF78450A); // dimmed amber for borders
-  static const red      = Color(0xFFEF4444); // violation red
-  static const cyan     = Color(0xFF06B6D4); // data cyan
-  static const textPri  = Color(0xFFE2E8F0);
-  static const textSec  = Color(0xFF64748B);
+  static const red = Color(0xFFEF4444); // violation red
+  static const cyan = Color(0xFF06B6D4); // data cyan
+  static const textPri = Color(0xFFE2E8F0);
+  static const textSec = Color(0xFF64748B);
   static const textMono = Color(0xFF94A3B8);
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -47,9 +47,10 @@ class _AppHomePageState extends State<AppHomePage>
       vsync: this,
       duration: const Duration(milliseconds: 1400),
     )..repeat(reverse: true);
-    _pulseAnim = Tween<double>(begin: 0.4, end: 1.0).animate(
-      CurvedAnimation(parent: _pulse, curve: Curves.easeInOut),
-    );
+    _pulseAnim = Tween<double>(
+      begin: 0.4,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _pulse, curve: Curves.easeInOut));
   }
 
   @override
@@ -69,7 +70,7 @@ class _AppHomePageState extends State<AppHomePage>
           backgroundColor: _C.bg,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
-          titleTextStyle: TextStyle(          
+          titleTextStyle: TextStyle(
             fontFamily: 'monospace',
             fontSize: 13,
             letterSpacing: 2.5,
@@ -80,7 +81,7 @@ class _AppHomePageState extends State<AppHomePage>
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('TRAFFIC PATROL  v2.1'),
+          title: Text(loc?.appTitle ?? 'TRAFFIC PATROL  v2.1'),
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -102,7 +103,7 @@ class _AppHomePageState extends State<AppHomePage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildHero(context),
+              _buildHero(context, loc),
               _buildStatusBar(),
               const SizedBox(height: 8),
               _buildGridSection(context, loc),
@@ -117,7 +118,7 @@ class _AppHomePageState extends State<AppHomePage>
   }
 
   // ── Hero / logo zone ────────────────────────────────────────────────────────
-  Widget _buildHero(BuildContext context) {
+  Widget _buildHero(BuildContext context, AppLocalizations? loc) {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -136,10 +137,15 @@ class _AppHomePageState extends State<AppHomePage>
                 // ── LOGO / ANIMATION PLACEHOLDER ──────────────────────────
                 // Drop your animated logo or Lottie widget here.
                 // Recommended size: 120×120. Remove the placeholder container.
-            LottieBuilder.asset('./assets/Loader.json', width: 120, height: 120),
+                LottieBuilder.asset(
+                  './assets/Loader.json',
+                  width: 120,
+                  height: 120,
+                ),
                 const SizedBox(height: 20),
-                const Text(
-                  'AUTOMATED VIOLATION DETECTION',
+                Text(
+                  loc?.aiPoweredTrafficSystem ??
+                      'AUTOMATED VIOLATION DETECTION',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'monospace',
@@ -150,8 +156,9 @@ class _AppHomePageState extends State<AppHomePage>
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'AI-Powered Traffic\nEnforcement System',
+                Text(
+                  loc?.aiPoweredTrafficSystem ??
+                      "AI-Powered Traffic\nEnforcement System",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 26,
@@ -162,8 +169,9 @@ class _AppHomePageState extends State<AppHomePage>
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Capture · Detect · Report · Protect',
+                Text(
+                  loc?.captureDetectReportProtect ??
+                      'Capture · Detect · Report · Protect',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'monospace',
@@ -182,6 +190,7 @@ class _AppHomePageState extends State<AppHomePage>
 
   // ── Live status bar ─────────────────────────────────────────────────────────
   Widget _buildStatusBar() {
+    var loc = AppLocalizations.of(context);
     return Container(
       color: _C.bg,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -202,8 +211,8 @@ class _AppHomePageState extends State<AppHomePage>
             ),
           ),
           const SizedBox(width: 8),
-          const Text(
-            'SYSTEM ONLINE',
+          Text(
+            loc?.systemOnline ?? 'SYSTEM ONLINE',
             style: TextStyle(
               fontFamily: 'monospace',
               fontSize: 11,
@@ -233,11 +242,11 @@ class _AppHomePageState extends State<AppHomePage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 4, bottom: 14),
+          Padding(
+            padding: const EdgeInsets.only(left: 4, bottom: 14),
             child: Text(
-              'SELECT OPERATION',
-              style: TextStyle(
+             loc?.selectOperation ?? 'SELECT OPERATION',
+              style: const TextStyle(
                 fontFamily: 'monospace',
                 fontSize: 10,
                 letterSpacing: 3,
@@ -249,8 +258,8 @@ class _AppHomePageState extends State<AppHomePage>
           // Primary action — full width, amber highlight
           _PrimaryCard(
             icon: Icons.videocam_outlined,
-            label: 'CAPTURE VIOLATION',
-            sublabel: 'Open camera · detect · report',
+            label: loc?.captureViolation ?? 'CAPTURE VIOLATION',
+            sublabel: loc?.openCameraDetectReport ?? 'Open camera · detect · report',
             accent: _C.amber,
             onTap: () => Navigator.push(
               context,
@@ -274,7 +283,7 @@ class _AppHomePageState extends State<AppHomePage>
             children: [
               _GridCard(
                 icon: Icons.gavel_outlined,
-                label: 'Violations',
+                label: loc?.violations ?? 'Violations',
                 tag: 'RECORDS',
                 accent: _C.red,
                 onTap: () => Navigator.push(
@@ -284,7 +293,7 @@ class _AppHomePageState extends State<AppHomePage>
               ),
               _GridCard(
                 icon: Icons.stars_outlined,
-                label: 'Points',
+                label: loc?.points ??'Points',
                 tag: 'REWARDS',
                 accent: _C.amber,
                 onTap: () => Navigator.push(
@@ -294,7 +303,7 @@ class _AppHomePageState extends State<AppHomePage>
               ),
               _GridCard(
                 icon: Icons.article_outlined,
-                label: 'Contents',
+                label: loc?.contents ?? 'Contents',
                 tag: 'INFO',
                 accent: _C.cyan,
                 onTap: () => Navigator.push(
@@ -323,13 +332,14 @@ class _AppHomePageState extends State<AppHomePage>
 
   // ── Footer ──────────────────────────────────────────────────────────────────
   Widget _buildFooter() {
+    var loc =AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           Container(width: 24, height: 1, color: _C.border),
           const SizedBox(width: 10),
-          const Text(
+           Text( loc?.footerText ??
             'TRAFFIC PATROL ENFORCEMENT SYSTEM  ©2025',
             style: TextStyle(
               fontFamily: 'monospace',
@@ -379,9 +389,7 @@ class _PrimaryCardState extends State<_PrimaryCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
         decoration: BoxDecoration(
-          color: _pressed
-              ? _C.surface.withValues(alpha: 0.6)
-              : _C.surface,
+          color: _pressed ? _C.surface.withValues(alpha: 0.6) : _C.surface,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: widget.accent, width: 1.2),
         ),
@@ -415,18 +423,12 @@ class _PrimaryCardState extends State<_PrimaryCard> {
                   const SizedBox(height: 3),
                   Text(
                     widget.sublabel,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: _C.textSec,
-                    ),
+                    style: const TextStyle(fontSize: 12, color: _C.textSec),
                   ),
                 ],
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: widget.accent.withOpacity(0.6),
-            ),
+            Icon(Icons.chevron_right, color: widget.accent.withOpacity(0.6)),
           ],
         ),
       ),
@@ -481,8 +483,10 @@ class _GridCardState extends State<_GridCard> {
               children: [
                 Icon(widget.icon, color: widget.accent, size: 22),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: widget.accent.withOpacity(0.10),
                     borderRadius: BorderRadius.circular(4),
