@@ -31,7 +31,7 @@ class _CameraAppState extends State<CameraApp> {
     _objectDetector = ObjectDetector(
       options: ObjectDetectorOptions(
         // ✅ Use the bundled base model — no tflite file needed
-        mode: DetectionMode.stream,         // stream for live preview
+        mode: DetectionMode.single,         // stream for live preview
         classifyObjects: true,              // enables label output
         multipleObjects: true,              // detect all objects per frame
       ),
@@ -69,8 +69,18 @@ class _CameraAppState extends State<CameraApp> {
       final inputImage = _buildInputImage(image);
       if (inputImage == null) return;
 
-      final objects = await _objectDetector.processImage(inputImage);
+final objects = await _objectDetector.processImage(inputImage);
 
+//remove after debugging
+for (final obj in objects) {
+  if (obj.labels.isEmpty) {
+    debugPrint('⚠️ Object detected but NO labels — bounding box: ${obj.boundingBox}');
+  } else {
+    for (final label in obj.labels) {
+      debugPrint('✅ Label: "${label.text}" confidence: ${(label.confidence * 100).toStringAsFixed(1)}%');
+    }
+  }
+}
       if (mounted) {
         setState(() {
           _detectedObjects = objects;
