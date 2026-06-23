@@ -54,5 +54,167 @@
   "@password": { "description": "Login form password field" },
 
   "dontHaveAccountSignUp": "അക്കൗണ്ട് ഇല്ലേ? സൈൻ അപ്പ് ചെയ്യുക",
-  "@dontHaveAccountSignUp": { "description": "Link to signup page" }
+  "@dontHaveAccountSignUp": { "description": "Link to signup page" },
+
+  "appBarTitle": "ട്രാഫിക് പട്രോൾ v2.1",
+  "@appBarTitle": { "description": "App bar title in home page" },
+
+  "automatedViolationDetection": "സ്വയശക്തമാക്കിയ ലംഗന ശിക്ഷണ കണ്ടെത്തൽ",
+  "@automatedViolationDetection": { "description": "Hero section subtitle" },
+
+  "aiPoweredTrafficSystem": "AI സഹായത്തോടെ ട്രാഫിക്\nനിയന്ത്രണ വിധാനം",
+  "@aiPoweredTrafficSystem": { "description": "Hero section main title" },
+
+  "captureDetectReportProtect": "പകരം · കണ്ടെത്തുക · റിപ്പോർട്ട് · സംരക്ഷിക്കുക",
+  "@captureDetectReportProtect": { "description": "Hero section tagline" },
+
+  "systemOnline": "സിസ്റ്റം ഓണ്‍ലൈനില്‍",
+  "@systemOnline": { "description": "Status bar text indicating system is online" },
+
+  "mlKitActive": "ML കിറ്റ് ● ആക്‌ടീവ്",
+  "@mlKitActive": { "description": "ML Kit status indicator" },
+
+  "selectOperation": "ഓപറേഷൻ തിരഞ്ഞെടുക്കുക",
+  "@selectOperation": { "description": "Grid section header text" },
+
+  "captureViolation": "ലംഗന ശിക്ഷണ പകരം",
+  "@captureViolation": { "description": "Primary action card label" },
+
+  "openCameraDetectReport": " ക്യാമറ തുറക്കുക · കണ്ടെത്തുക · റിപ്പോർട്ട്",
+  "@openCameraDetectReport": { "description": "Primary action card sublabel" },
+
+  "violations": "ലംഗന ശിക്ഷണങ്ങൾ",
+  "@violations": { "description": "Violations page and menu item label" },
+
+  "records": "റെക്കോർഡുകൾ",
+  "@records": { "description": "Tag for violations grid card" },
+
+  "points": "പോയിന്റുകൾ",
+  "@points": { "description": "Points page label" },
+
+  "rewards": "ബഹുമതികൾ",
+  "@rewards": { "description": "Tag for points grid card" },
+
+  "contents": "ഉള്ളടക്കം",
+  "@contents": { "description": "Contents page label" },
+
+  "info": "വിവരങ്ങൾ",
+  "@info": { "description": "Tag for contents grid card" },
+
+  "account": "അക്കൗണ്ട്",
+  "@account": { "description": "Tag for login grid card" },
+
+  "footerText": "ട്രാഫിക് പട്രോൾ നിയന്ത്രണ വിധാനം ©2025",
+  "@footerText": { "description": "Footer copyright text" },
+
+  "cameraPageTitle": "ക്യാമറ",
+  "@cameraPageTitle": { "description": "Camera page title" },
+
+  "describeViolation": "ലംഗന ശിക്ഷണം വിശദീകരിക്കുക",
+  "@describeViolation": { "description": "Dialog title for violation description" },
+
+  "editOrConfirmDescription": "AI വിശദീകരണം എഡിറ്റ് ചെയ്യുക അല്ലെങ്കിൽ സ്ഥിരീകരിക്കുക...",
+  "@editOrConfirmDescription": { "description": "Hint text for violation description field" },
+
+  "cancel": "ലഘൂകരിക്കുക",
+  "@cancel": { "description": "Cancel button label" },
+
+  "uploadSuccess": "വിച്ച്ഫലനമായി അപ്‌ലോഡ് ചെയ്യപ്പെട്ടു!",
+  "@uploadSuccess": { "description": "Success message after upload" },
+
+  "uploadError": "അപ്‌ലോഡ് പിഴവ്: {error}",
+  "@uploadError": { "description": "Error message during upload with placeholder for error details" },
+
+  "noHelmetOnRider": "സവാരിക്ക് ഹെൽമെറ്റ് ഇല്ല",
+  "@noHelmetOnRider": { "description": "Violation message: no helmet detected" },
+
+  "vehicleNearSignal": "വാഹനം സിഗ്‌നലിന് സമീപത്തുണ്ട് — സാധ്യതയുള്ള സിഗ്‌നൽ ലംഗനം",
+  "@vehicleNearSignal": { "description": "Violation message: vehicle near traffic light" },
+
+  "vehicleOverloading": "വാഹനത്തിൽ അമിതം ഭാരം ({count} പേർ)",
+  "@vehicleOverloading": { "description": "Violation message: too many persons on vehicle" },
+
+  "detectedObjects": "കണ്ടെത്തി: {objects}. നിശ്ചിത ലംഗനം ഇല്ല.",
+  "@detectedObjects": { "description": "Message when objects are detected but no violation found" },
+
+  "violationPrefix": "⚠️ ലംഗനം: {violations}",
+  "@violationPrefix": { "description": "Prefix for violation messages" },
+
+  "noContentsFound": "ഉള്ളടക്കം കണ്ടെത്തിയില്ല.",
+  "@noContentsFound": { "description": "Empty state message for contents page" },
+
+  "noPointsFound": "പോയിന്റുകൾ കണ്ടെത്തിയില്ല.",
+  "@noPointsFound": { "description": "Empty state message for points page" },
+
+  "noViolationsFound": "ലംഗന ശിക്ഷണങ്ങൾ കണ്ടെത്തിയില്ല.",
+  "@noViolationsFound": { "description": "Empty state message for violations page" },
+
+  "registration": "റജിസ്ട്രേഷൻ",
+  "@registration": { "description": "Registration dialog title" },
+
+  "userRegistered": "ഉപയോക്താവ് റജിസ്റ്റർ ആയി",
+  "@userRegistered": { "description": "Success message after registration" },
+
+  "registrationFailed": "റജിസ്ട്രേഷൻ പരാജയപ്പെട്ടു",
+  "@registrationFailed": { "description": "Error message for failed registration" },
+
+  "tryOnceMore": "മെiedenis അയക്ക് കൂട്ടുക",
+  "@tryOnceMore": { "description": "Error message asking user to retry" },
+
+  "signUp": "റജിസ്റ്റർ ചെയ്യുക",
+  "@signUp": { "description": "Sign up page title and button label" },
+
+  "firstName": "മുൻപേര്",
+  "@firstName": { "description": "First name field label in signup form" },
+
+  "lastName": "പേര്",
+  "@lastName": { "description": "Last name field label in signup form" },
+
+  "email": "ഈമെയിൽ",
+  "@email": { "description": "Email field label in signup form" },
+
+  "phoneNumber": "ഫോൺ നമ്പർ",
+  "@phoneNumber": { "description": "Phone number field label in signup form" },
+
+  "address": "വിലാസം",
+  "@address": { "description": "Address field label in signup form" },
+
+  "pinCode": "പിൻകോഡ്",
+  "@pinCode": { "description": "Pin code field label in signup form" },
+
+  "malayalam": "മലയാളം",
+  "@malayalam": { "description": "Malayalam language display name" },
+
+  "@uploadError": {
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  },
+  "@vehicleOverloading": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "@detectedObjects": {
+    "placeholders": {
+      "objects": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  },
+  "@violationPrefix": {
+    "placeholders": {
+      "violations": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  }
 }
