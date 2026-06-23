@@ -25,7 +25,8 @@ class _C {
 
 class AppHomePage extends StatefulWidget {
   final Function(Locale) onLocaleChanged;
-  const AppHomePage({super.key, required this.onLocaleChanged});
+  final Function(ThemeMode) onThemeChanged;
+  const AppHomePage({super.key, required this.onLocaleChanged, required this.onThemeChanged});
 
   @override
   State<AppHomePage> createState() => _AppHomePageState();
@@ -79,6 +80,7 @@ class _AppHomePageState extends State<AppHomePage>
           ),
         ),
       ),
+      
       child: Scaffold(
         appBar: AppBar(
           title: Text(loc?.appTitle ?? 'TRAFFIC PATROL  v2.1'),
@@ -86,7 +88,10 @@ class _AppHomePageState extends State<AppHomePage>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: HomeAppBarActions(
-                onThemeChanged: (mode) => setState(() => _themeMode = mode),
+                onThemeChanged: (mode) {
+                  setState(() => _themeMode = mode);
+                  widget.onThemeChanged(mode);
+                },
                 onLocaleChanged: (locale) {
                   setState(() => _locale = locale);
                   widget.onLocaleChanged(locale);
@@ -265,7 +270,10 @@ class _AppHomePageState extends State<AppHomePage>
               context,
               MaterialPageRoute(
                 builder: (_) =>
-                    CameraApp(onLocaleChanged: widget.onLocaleChanged),
+                    CameraApp(
+                      onLocaleChanged: widget.onLocaleChanged,
+                      onThemeChanged: widget.onThemeChanged,
+                    ),
               ),
             ),
           ),
@@ -311,21 +319,10 @@ class _AppHomePageState extends State<AppHomePage>
                   MaterialPageRoute(builder: (_) => const ContentReadPage()),
                 ),
               ),
-              _GridCard(
-                icon: Icons.person_outline,
-                label: loc?.login ?? 'Login',
-                tag: 'ACCOUNT',
-                accent: _C.textSec,
-                onTap: () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => LoginForm(onLocaleChanged: (_) {}),
-                  ),
-                ),
-              ),
+         
             ],
           ),
-        ],
+        ]
       ),
     );
   }
