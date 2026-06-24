@@ -149,7 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            AppHomePage(onLocaleChanged: (_) {}),
+                            AppHomePage(onLocaleChanged: (_) {}, onThemeChanged: (ThemeMode p1) {  },),
                       ),
                     ),
 

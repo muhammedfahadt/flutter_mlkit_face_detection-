@@ -208,4 +208,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get malayalam => 'മലയാളം';
+
+  @override
+  String get hindi => ' हिंदी';
 }

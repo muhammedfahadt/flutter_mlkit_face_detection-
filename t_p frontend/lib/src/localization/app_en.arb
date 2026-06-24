@@ -1,5 +1,5 @@
 {
-  "appTitle": "Traffic Patrol",
+  "appTitle": "Traffic Patrol V2.1",
   "@appTitle": {
     "description": "The title of the application"
   },
@@ -109,8 +109,8 @@
   "footerText": "TRAFFIC PATROL ENFORCEMENT SYSTEM  ©2025",
   "@footerText": { "description": "Footer copyright text" },
 
-  "camera": "Camera",
-  "@camera": { "description": "Camera page title" },
+  "cameraPageTitle": "Camera",
+  "@cameraPageTitle": { "description": "Camera page title" },
 
   "describeViolation": "Describe the violation",
   "@describeViolation": { "description": "Dialog title for violation description" },
@@ -121,21 +121,11 @@
   "cancel": "Cancel",
   "@cancel": { "description": "Cancel button label" },
 
-  "upload": "Upload",
-  "@upload": { "description": "Upload button label" },
-
   "uploadSuccess": "Uploaded successfully!",
-  
   "@uploadSuccess": { "description": "Success message after upload" },
 
   "uploadError": "Upload error: {error}",
   "@uploadError": { "description": "Error message during upload with placeholder for error details" },
-  "placeholders": {
-    "error": {
-      "type": "String",
-      "format": "plain"
-    }
-  },
 
   "noHelmetOnRider": "No helmet on rider",
   "@noHelmetOnRider": { "description": "Violation message: no helmet detected" },
@@ -145,30 +135,12 @@
 
   "vehicleOverloading": "Vehicle overloading ({count} persons)",
   "@vehicleOverloading": { "description": "Violation message: too many persons on vehicle" },
-  "placeholders": {
-    "count": {
-      "type": "int",
-      "format": "compact"
-    }
-  },
 
   "detectedObjects": "Detected: {objects}. No clear violation.",
   "@detectedObjects": { "description": "Message when objects are detected but no violation found" },
-  "placeholders": {
-    "objects": {
-      "type": "String",
-      "format": "plain"
-    }
-  },
 
   "violationPrefix": "⚠️ Violation: {violations}",
   "@violationPrefix": { "description": "Prefix for violation messages" },
-  "placeholders": {
-    "violations": {
-      "type": "String",
-      "format": "plain"
-    }
-  },
 
   "noContentsFound": "No contents found.",
   "@noContentsFound": { "description": "Empty state message for contents page" },
@@ -213,6 +185,42 @@
   "@pinCode": { "description": "Pin code field label in signup form" },
 
   "malayalam": "മലയാളം",
-  "@malayalam": { "description": "Malayalam language display name" }
-}
+  "@malayalam": { "description": "Malayalam language display name" },
 
+  "hindi": " हिंदी",
+  "@malayalam": { "description": "hindi language display name" },
+  
+
+  "@uploadError": {
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  },
+  "@vehicleOverloading": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "@detectedObjects": {
+    "placeholders": {
+      "objects": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  },
+  "@violationPrefix": {
+    "placeholders": {
+      "violations": {
+        "type": "String",
+        "format": "plain"
+      }
+    }
+  }
+}

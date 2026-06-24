@@ -2,13 +2,15 @@ import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
+import 'package:traffic_patrol/src/localization/app_localizations.dart';
 import 'package:traffic_patrol/src/pages/widgets/camera_service.dart';
 import 'app_home_page.dart';
 import 'dart:typed_data';
 
 class CameraApp extends StatefulWidget {
   final Function(Locale) onLocaleChanged;
-  const CameraApp({super.key, required this.onLocaleChanged});
+  final Function(ThemeMode) onThemeChanged;
+  const CameraApp({super.key, required this.onLocaleChanged, required this.onThemeChanged});
 
   @override
   State<CameraApp> createState() => _CameraAppState();
@@ -344,7 +346,7 @@ InputImageRotation? _getRotation() {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Camera'),
+        title: Text(AppLocalizations.of(context)?.cameraPageTitle ?? 'Camera'),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
         actions: [
@@ -354,7 +356,10 @@ InputImageRotation? _getRotation() {
             onPressed: () => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (_) => AppHomePage(onLocaleChanged: (_) {}),
+                builder: (_) => AppHomePage(
+                  onLocaleChanged: widget.onLocaleChanged,
+                  onThemeChanged: widget.onThemeChanged,
+                ),
               ),
               (_) => false,
             ),

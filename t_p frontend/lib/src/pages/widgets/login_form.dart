@@ -7,8 +7,9 @@ import 'managed_user_widget.dart';
 
 class LoginForm extends StatefulWidget {
     final Function(Locale) onLocaleChanged;
+    final Function(ThemeMode) onThemeChanged;
 
-  const LoginForm({super.key, required this. onLocaleChanged});
+  const LoginForm({super.key, required this.onLocaleChanged, required this.onThemeChanged});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -76,7 +77,10 @@ class _LoginFormState extends State<LoginForm> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => AppHomePage(onLocaleChanged: (_) {}),
+            builder: (context) => AppHomePage(
+              onLocaleChanged: widget.onLocaleChanged,
+              onThemeChanged: widget.onThemeChanged,
+            ),
           ),
         );
       } else {
