@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: _themeMode,
       title: 'Traffic Patrol',
-      home: AppHomePage(
+      home: LoginForm(
         onLocaleChanged: _changeLocale,
         onThemeChanged: _changeTheme,
       ),
