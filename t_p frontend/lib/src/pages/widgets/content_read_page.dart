@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:openapi/openapi.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:traffic_patrol/src/pages/widgets/_read_list_item.dart';
-
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 
 // ─── Design tokens (same across all pages) ────────────────────────────────────
@@ -187,23 +187,9 @@ class _ContentReadPageState extends State<ContentReadPage>
               children: [
                 // ── LOTTIE / ICON PLACEHOLDER ─────────────────────────────
                 // Replace this Container with your Lottie widget, e.g.:
-                // LottieBuilder.asset('assets/lottie/content.json',
-                //   width: 72, height: 72)
-                Container(
-                  width: 72,
-                  height: 72,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: _C.cyanDim, width: 1.5),
-                    color: _C.bg,
-                  ),
-                  child: const Center(
-                    child: Icon(Icons.perm_media_outlined,
-                        color: _C.cyan, size: 32),
-                  ),
-                ),
-                // ── END LOTTIE PLACEHOLDER ────────────────────────────────
-
+                 LottieBuilder.asset('assets/reporting.json',
+                   width: 72, height: 72),
+             
                 const SizedBox(width: 20),
                 Expanded(
                   child: Column(

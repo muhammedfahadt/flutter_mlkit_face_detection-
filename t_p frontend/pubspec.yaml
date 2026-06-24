@@ -77,6 +77,7 @@ flutter:
   assets:
       - assets/Loader.json
       - assets/Confetti Day.json
+      - assets/reporting.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
