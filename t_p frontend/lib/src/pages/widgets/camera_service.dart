@@ -41,6 +41,8 @@ class CameraService {
           ),
           headers: {'Authorization': 'Bearer ${Openapi.bearerToken}'},
         );
+        debugPrint('Content created. statusCode=${contentResponse.statusCode}, data=${contentResponse.data}');
+        debugPrint('Content ID: ${Openapi.bearerToken}');
 
     if (contentResponse.statusCode != 201 || contentResponse.data == null) {
       throw Exception('Failed to create content');
@@ -49,6 +51,16 @@ class CameraService {
     final contentData = contentResponse.data!;
 
     // 2) Create Content Blob (actual bytes)
+    await _openapi.getContentBlobResourceApi().createContentBlob(
+      contentBlobDTO: ContentBlobDTO(
+        (b) => b
+          ..content = (ContentDTOBuilder()..id = contentData.id)
+          ..contentBlob = ListBuilder<String>(
+            imageBytes.map((b) => b.toRadixString(16).padLeft(2, '0')).toList(),
+          ),
+      ),
+      headers: {'Authorization': 'Bearer ${Openapi.bearerToken}'},
+    );
     await _openapi.getContentBlobResourceApi().createContentBlob(
       contentBlobDTO: ContentBlobDTO(
         (b) => b

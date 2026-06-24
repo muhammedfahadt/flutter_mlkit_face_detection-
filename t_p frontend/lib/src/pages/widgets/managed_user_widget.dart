@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:traffic_patrol/src/pages/widgets/config.dart';
-import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
-import 'package:traffic_patrol/src/localization/app_localizations.dart';
-import 'package:openapi/openapi.dart';
 import 'package:lottie/lottie.dart';
-import 'app_home_page.dart';
+import 'package:openapi/openapi.dart';
+import 'package:traffic_patrol/src/pages/widgets/config.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'app_home_page.dart';
 
 // ─── Design tokens (same across all pages) ────────────────────────────────────
 class _C {
-  static const bg       = Color(0xFF0A0E1A);
-  static const surface  = Color(0xFF111827);
-  static const border   = Color(0xFF1E2D45);
-  static const amber    = Color(0xFFF59E0B);
+  static const bg = Color(0xFF0A0E1A);
+  static const surface = Color(0xFF111827);
+  static const border = Color(0xFF1E2D45);
+  static const amber = Color(0xFFF59E0B);
   static const amberDim = Color(0xFF78450A);
-  static const red      = Color(0xFFEF4444);
-  static const cyan     = Color(0xFF06B6D4);
-  static const green    = Color(0xFF10B981);
-  static const textPri  = Color(0xFFE2E8F0);
-  static const textSec  = Color(0xFF64748B);
+  static const red = Color(0xFFEF4444);
+  static const cyan = Color(0xFF06B6D4);
+  static const green = Color(0xFF10B981);
+  static const textPri = Color(0xFFE2E8F0);
+  static const textSec = Color(0xFF64748B);
   static const textMono = Color(0xFF94A3B8);
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -70,22 +66,22 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage>
     with SingleTickerProviderStateMixin {
   // Controllers
-  final _loginController       = TextEditingController();
-  final _firstNameController   = TextEditingController();
-  final _lastNameController    = TextEditingController();
-  final _emailController       = TextEditingController();
-  final _passwordController    = TextEditingController();
+  final _loginController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _phoneNumberController = TextEditingController();
-  final _addressController     = TextEditingController();
-  final _pinCodeController     = TextEditingController();
-  final Openapi _openapi       = Openapi();
+  final _addressController = TextEditingController();
+  final _pinCodeController = TextEditingController();
+  final Openapi _openapi = Openapi();
 
   bool _obscurePassword = true;
-  bool _isLoading       = false;
+  bool _isLoading = false;
 
   // Pulse for the status dot
   late final AnimationController _pulse;
-  late final Animation<double>   _pulseAnim;
+  late final Animation<double> _pulseAnim;
 
   @override
   void initState() {
@@ -94,9 +90,10 @@ class _SignUpPageState extends State<SignUpPage>
       vsync: this,
       duration: const Duration(milliseconds: 1400),
     )..repeat(reverse: true);
-    _pulseAnim = Tween<double>(begin: 0.4, end: 1.0).animate(
-      CurvedAnimation(parent: _pulse, curve: Curves.easeInOut),
-    );
+    _pulseAnim = Tween<double>(
+      begin: 0.4,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _pulse, curve: Curves.easeInOut));
   }
 
   @override
@@ -113,110 +110,130 @@ class _SignUpPageState extends State<SignUpPage>
     super.dispose();
   }
 
-  // ── Sign up logic (unchanged from original) ────────────────────────────────
-  Future<void> _signUp(BuildContext context) async {
-    setState(() => _isLoading = true);
-    try {
-      ManagedUserVMBuilder managedUserVMBuilder = ManagedUserVMBuilder()
-        ..login     = _loginController.text
-        ..firstName = _firstNameController.text
-        ..lastName  = _lastNameController.text
-        ..email     = _emailController.text
-        ..password  = _passwordController.text
-        ..activated = true;
+Future<void> _signUp(BuildContext context) async {
+  setState(() => _isLoading = true);
 
-      ManagedUserVM managedUserVM = managedUserVMBuilder.build();
-      final userResponse = await _openapi
-          .getAccountResourceApi()
-          .registerAccount(managedUserVM: managedUserVM);
+  try {
+    // Register User
+    final managedUser = (ManagedUserVMBuilder()
+          ..login = _loginController.text.trim()
+          ..firstName = _firstNameController.text.trim()
+          ..lastName = _lastNameController.text.trim()
+          ..email = _emailController.text.trim()
+          ..password = _passwordController.text
+          ..activated = true)
+        .build();
 
-      if (userResponse.statusCode == 201) {
-        LoginVMBuilder loginVMBuilder = LoginVMBuilder()
-          ..username   = _loginController.text
-          ..password   = _passwordController.text
-          ..rememberMe = true;
+    final registerResponse = await _openapi
+        .getAccountResourceApi()
+        .registerAccount(managedUserVM: managedUser);
 
-        LoginVM loginVM = loginVMBuilder.build();
-        final jwtResponse = await _openapi
-            .getAuthenticateControllerApi()
-            .authorize(loginVM: loginVM);
+    if (registerResponse.statusCode != 201) {
+      throw Exception(
+          'Registration failed (${registerResponse.statusCode})');
+    }
 
-        if (jwtResponse.statusCode == 200 || jwtResponse.statusCode == 201) {
-          Configuration.secureStorage.write(
-            key: 'jwt',
-            value: jwtResponse.data?.idToken,
-          );
-          String? jwt = jwtResponse.data?.idToken;
+    // Login
+    final loginVM = (LoginVMBuilder()
+          ..username = _loginController.text.trim()
+          ..password = _passwordController.text
+          ..rememberMe = true)
+        .build();
 
-          final currentUser = await _openapi.getAccountResourceApi().getAccount(
-            headers: {'Authorization': 'Bearer $jwt'},
-          );
+    final authResponse = await _openapi
+        .getAuthenticateControllerApi()
+        .authorize(loginVM: loginVM);
 
-          UserDTOBuilder userDTOBuilder = UserDTOBuilder()
-            ..id    = currentUser.data?.id
-            ..login = currentUser.data?.login;
+    if (authResponse.statusCode != 200 &&
+        authResponse.statusCode != 201) {
+      throw Exception(
+          'Authentication failed (${authResponse.statusCode})');
+    }
 
-          AppUserDTOBuilder appUserDTOBuilder = AppUserDTOBuilder()
-            ..phoneNumber = int.tryParse(_phoneNumberController.text)
-            ..address     = _addressController.text
-            ..pinCode     = int.tryParse(_pinCodeController.text)
-            ..user        = userDTOBuilder;
+    final jwt = authResponse.data?.idToken;
 
-          AppUserDTO appUserDTO = appUserDTOBuilder.build();
+    if (jwt == null || jwt.isEmpty) {
+      throw Exception('JWT token is empty');
+    }
 
-          final appUserResponse = await _openapi
-              .getAppUserResourceApi()
-              .createAppUser(
-                appUserDTO: appUserDTO,
-                headers: {'Authorization': 'Bearer $jwt'},
-              );
+    Openapi.bearerToken = jwt;
 
-          if (appUserResponse.statusCode == 201) {
-            Configuration.secureStorage.write(
-              key: 'appuserId',
-              value: appUserResponse.data?.id.toString(),
-            );
-            Configuration.secureStorage.write(
-              key: 'appUsernumber',
-              value: appUserResponse.data?.phoneNumber.toString(),
-            );
-            setState(() => _isLoading = false);
-            _showStatusDialog(
-              success: true,
-              message: 'Account created successfully.\nWelcome to Traffic Patrol.',
-              onConfirm: () => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AppHomePage(
-                    onLocaleChanged: (_) {},
-                    onThemeChanged: (ThemeMode p1) {},
-                  ),
-                ),
-              ),
-            );
-          } else {
-            setState(() => _isLoading = false);
-            _showStatusDialog(
-              success: false,
-              message: 'AppUser registration failed.\nPlease try again.',
-            );
-          }
-        }
-      } else {
-        setState(() => _isLoading = false);
-        _showStatusDialog(
-          success: false,
-          message: 'Registration failed.\nCheck your details and try again.',
+    // Get Current User
+    final accountResponse = await _openapi
+        .getAccountResourceApi()
+        .getAccount(
+          headers: {'Authorization': 'Bearer $jwt'},
         );
-      }
-    } catch (e) {
-      setState(() => _isLoading = false);
-      _showStatusDialog(
-        success: false,
-        message: 'An error occurred:\n${e.toString()}',
+
+    final account = accountResponse.data;
+
+    if (account == null) {
+      throw Exception('Failed to retrieve user details');
+    }
+
+    // Build UserDTO
+    final userDTO = (UserDTOBuilder()
+          ..id = account.id
+          ..login = account.login)
+        .build();
+
+    // Build AppUserDTO
+    final appUserDTO = (AppUserDTOBuilder()
+          ..phoneNumber =
+              int.tryParse(_phoneNumberController.text)
+          ..address = _addressController.text.trim()
+          ..pinCode =
+              int.tryParse(_pinCodeController.text)
+          ..user = userDTO.toBuilder())
+        .build();
+
+    final appUserResponse = await _openapi
+        .getAppUserResourceApi()
+        .createAppUser(
+          appUserDTO: appUserDTO,
+          headers: {'Authorization': 'Bearer $jwt'},
+        );
+
+    if (appUserResponse.statusCode != 201) {
+      throw Exception(
+        'AppUser creation failed (${appUserResponse.statusCode})',
       );
     }
+
+    await Configuration.secureStorage.write(
+      key: 'appuserId',
+      value: appUserResponse.data?.id?.toString() ?? '',
+    );
+
+    setState(() => _isLoading = false);
+
+    _showStatusDialog(
+      success: true,
+      message: 'Account created successfully.',
+      onConfirm: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => AppHomePage(
+              onLocaleChanged: (_) {},
+              onThemeChanged: (_) {},
+            ),
+          ),
+        );
+      },
+    );
+  } catch (e, stackTrace) {
+    debugPrint('Signup Error: $e');
+    debugPrintStack(stackTrace: stackTrace);
+
+    setState(() => _isLoading = false);
+
+    _showStatusDialog(
+      success: false,
+      message: e.toString(),
+    );
   }
+}
 
   // ── Themed dialog ──────────────────────────────────────────────────────────
   void _showStatusDialog({
@@ -231,10 +248,7 @@ class _SignUpPageState extends State<SignUpPage>
         backgroundColor: _C.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(
-            color: success ? _C.green : _C.red,
-            width: 1,
-          ),
+          side: BorderSide(color: success ? _C.green : _C.red, width: 1),
         ),
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -277,11 +291,9 @@ class _SignUpPageState extends State<SignUpPage>
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   decoration: BoxDecoration(
-                    border: Border.all(
-                        color: success ? _C.green : _C.red),
+                    border: Border.all(color: success ? _C.green : _C.red),
                     borderRadius: BorderRadius.circular(6),
-                    color: (success ? _C.green : _C.red)
-                        .withOpacity(0.08),
+                    color: (success ? _C.green : _C.red).withOpacity(0.08),
                   ),
                   child: Text(
                     success ? 'CONTINUE' : 'TRY AGAIN',
@@ -325,8 +337,7 @@ class _SignUpPageState extends State<SignUpPage>
         appBar: AppBar(
           title: const Text('REGISTER  //  NEW ACCOUNT'),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios,
-                size: 16, color: _C.textSec),
+            icon: const Icon(Icons.arrow_back_ios, size: 16, color: _C.textSec),
             onPressed: () => Navigator.pop(context),
           ),
           bottom: PreferredSize(
@@ -341,7 +352,9 @@ class _SignUpPageState extends State<SignUpPage>
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 16),
+                  horizontal: 16,
+                  vertical: 16,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -378,7 +391,8 @@ class _SignUpPageState extends State<SignUpPage>
                           color: _C.textSec,
                         ),
                         onPressed: () => setState(
-                            () => _obscurePassword = !_obscurePassword),
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                       ),
                     ),
 
@@ -413,9 +427,7 @@ class _SignUpPageState extends State<SignUpPage>
                       icon: Icons.phone_outlined,
                       hint: 'Enter phone number',
                       keyboard: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
 
                     const SizedBox(height: 20),
@@ -435,9 +447,7 @@ class _SignUpPageState extends State<SignUpPage>
                       icon: Icons.pin_outlined,
                       hint: 'Enter pin code',
                       keyboard: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
 
                     const SizedBox(height: 28),
@@ -447,8 +457,7 @@ class _SignUpPageState extends State<SignUpPage>
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 150),
                         width: double.infinity,
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         decoration: BoxDecoration(
                           color: _isLoading
                               ? _C.amberDim.withOpacity(0.3)
@@ -522,21 +531,23 @@ class _SignUpPageState extends State<SignUpPage>
         children: [
           Positioned.fill(child: CustomPaint(painter: _GridPainter())),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 20, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: Row(
               children: [
                 // ── LOTTIE / ICON PLACEHOLDER ─────────────────────────────
                 // Replace this Container with your Lottie widget, e.g.:
-                 LottieBuilder.asset('assets/Profile.json',
-                   width: 60, height: 60),
+                LottieBuilder.asset(
+                  'assets/Profile.json',
+                  width: 60,
+                  height: 60,
+                ),
 
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
-                      'NEW OFFICER REGISTRATION',
+                      'NEW REGISTRATION',
                       style: TextStyle(
                         fontFamily: 'monospace',
                         fontSize: 9,
@@ -578,8 +589,7 @@ class _SignUpPageState extends State<SignUpPage>
   Widget _buildStatusBar() {
     return Container(
       color: _C.bg,
-      padding:
-          const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Row(
         children: [
           AnimatedBuilder(
@@ -587,9 +597,12 @@ class _SignUpPageState extends State<SignUpPage>
             builder: (_, __) => Opacity(
               opacity: _pulseAnim.value,
               child: Container(
-                width: 7, height: 7,
+                width: 7,
+                height: 7,
                 decoration: const BoxDecoration(
-                    color: _C.amber, shape: BoxShape.circle),
+                  color: _C.amber,
+                  shape: BoxShape.circle,
+                ),
               ),
             ),
           ),
@@ -630,11 +643,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(width: 3, height: 14,
-            decoration: BoxDecoration(
-              color: _C.amber,
-              borderRadius: BorderRadius.circular(2),
-            )),
+        Container(
+          width: 3,
+          height: 14,
+          decoration: BoxDecoration(
+            color: _C.amber,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
         const SizedBox(width: 8),
         Text(
           label,
@@ -711,21 +727,21 @@ class _DarkField extends StatelessWidget {
               fontSize: 12,
               color: _C.textSec.withOpacity(0.5),
             ),
-            prefixIcon:
-                Icon(icon, size: 18, color: _C.textSec),
+            prefixIcon: Icon(icon, size: 18, color: _C.textSec),
             suffixIcon: suffix,
             filled: true,
             fillColor: _C.surface,
             contentPadding: const EdgeInsets.symmetric(
-                horizontal: 14, vertical: 14),
+              horizontal: 14,
+              vertical: 14,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: _C.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide:
-                  const BorderSide(color: _C.amber, width: 1.2),
+              borderSide: const BorderSide(color: _C.amber, width: 1.2),
             ),
           ),
         ),

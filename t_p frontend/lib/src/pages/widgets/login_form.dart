@@ -67,7 +67,12 @@ class _LoginFormState extends State<LoginForm> {
         'Successful login: ${result.statusCode == 200 && result.data?.idToken != null}',
       );
       debugPrint('Token: ${result.data?.idToken}');
-
+final accountResponse = await _openapi.getAccountResourceApi().getAccount();
+final appUserResponse = await _openapi.getAppUserResourceApi().getAppUser(
+      id: accountResponse.data?.id ?? 0,
+    );
+     final appUserId = appUserResponse.data!.id;
+    debugPrint('Successfully fetched and stored AppUser ID: ${appUserId}');
       // 401 for invalid credentials, anything else success depends on API contract.
       if (result.statusCode != 401 && result.data?.idToken != null) {
         Openapi.bearerToken = result.data!.idToken!;
