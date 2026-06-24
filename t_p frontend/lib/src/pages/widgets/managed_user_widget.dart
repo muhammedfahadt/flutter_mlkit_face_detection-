@@ -4,7 +4,7 @@ import 'package:traffic_patrol/src/pages/widgets/config.dart';
 import 'package:traffic_patrol/src/pages/widgets/upload_widget.dart';
 import 'package:traffic_patrol/src/localization/app_localizations.dart';
 import 'package:openapi/openapi.dart';
-
+import 'package:lottie/lottie.dart';
 import 'app_home_page.dart';
 
 import 'package:flutter/material.dart';
@@ -528,23 +528,9 @@ class _SignUpPageState extends State<SignUpPage>
               children: [
                 // ── LOTTIE / ICON PLACEHOLDER ─────────────────────────────
                 // Replace this Container with your Lottie widget, e.g.:
-                // LottieBuilder.asset('assets/lottie/register.json',
-                //   width: 60, height: 60)
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border:
-                        Border.all(color: _C.amberDim, width: 1.5),
-                    color: _C.bg,
-                  ),
-                  child: const Center(
-                    child: Icon(Icons.person_add_outlined,
-                        color: _C.amber, size: 26),
-                  ),
-                ),
-                // ── END LOTTIE PLACEHOLDER ────────────────────────────────
+                 LottieBuilder.asset('assets/Profile.json',
+                   width: 60, height: 60),
+
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
